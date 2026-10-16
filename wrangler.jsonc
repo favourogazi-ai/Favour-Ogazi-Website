@@ -1,0 +1,9 @@
+{
+  // Cloudflare Worker that serves the static site in ./public
+  "name": "favour-ogazi-website",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}
