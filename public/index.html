@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Favour Ogazi Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400&display=swap">
+<style>
+/* Layout: one long scrolled story in chapters, alternating black and white grounds. Sticky stages change as you scroll: the thread, the four sides, the case study reel, the principles. Single committed monochrome look. */
+:root {
+  --black: #0B0B0B;
+  --white: #F7F7F5;
+  --grey: #8A8A87;
+  --rule-on-black: #2A2A29;
+  --rule-on-white: #D9D9D5;
+  --font: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--white); color: var(--black); font-family: var(--font); font-size: 16px; line-height: 1.65; font-weight: 400; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+.dark { background: var(--black); color: var(--white); }
+.light { background: var(--white); color: var(--black); }
+.gutter { padding-inline: clamp(16px, 5vw, 72px); }
+.label { font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; }
+.dim { color: var(--grey); }
+.ph { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; border: 1px dashed currentColor; padding: 2px 7px; opacity: .6; white-space: nowrap; }
+
+/* Progress + chapter nav */
+.progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--grey); z-index: 50; mix-blend-mode: difference; }
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: calc(env(safe-area-inset-top, 0px) + 18px) clamp(16px, 5vw, 72px) 18px; color: #fff; mix-blend-mode: difference; pointer-events: none; }
+.topbar .mono { font-weight: 800; letter-spacing: .3em; font-size: 13px; }
+.topbar .chap { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; }
+.proto-note { position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); right: 14px; z-index: 45; background: var(--black); color: var(--white); border: 1px solid var(--rule-on-black); font-size: 11px; letter-spacing: .08em; padding: 8px 12px; max-width: 260px; line-height: 1.4; }
+
+/* 01 Hero */
+.hero { min-height: 92vh; display: grid; grid-template-columns: 1.1fr .9fr; align-items: end; gap: clamp(24px, 4vw, 64px); padding-block: 120px 56px; }
+.hero h1 { font-size: clamp(54px, 11vw, 168px); line-height: .88; font-weight: 800; letter-spacing: -.035em; text-transform: uppercase; }
+.hero h1 span { display: block; font-weight: 200; }
+.hero-side { display: grid; gap: 22px; align-content: end; min-width: 0; }
+.portrait { aspect-ratio: 4 / 5; max-width: 100%; width: 100%; background:
+  repeating-linear-gradient(135deg, #1b1b1b 0 2px, #121212 2px 12px); display: grid; place-items: end start; padding: 16px; border: 1px solid var(--rule-on-black); }
+.roles { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+.intro { font-size: clamp(16px, 1.5vw, 19px); font-weight: 300; max-width: 46ch; }
+.scroll-cue { display: flex; gap: 12px; align-items: center; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--grey); }
+.scroll-cue::before { content: ""; width: 48px; height: 1px; background: currentColor; }
+
+/* Generic sticky stage */
+.scrolly { position: relative; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; overflow: hidden; }
+
+/* 02 The thread: word reveal */
+#thread { height: 260vh; }
+.thread-text { font-size: clamp(30px, 5.4vw, 80px); line-height: 1.08; font-weight: 700; letter-spacing: -.02em; max-width: 18ch; }
+.thread-text .w { transition: opacity .25s ease; }
+.js .thread-text .w { opacity: .14; }
+.js .thread-text .w.on { opacity: 1; }
+.thread-meta { margin-top: 36px; display: flex; gap: 32px; flex-wrap: wrap; }
+
+/* 03 Four sides converge */
+#sides { height: 420vh; }
+.sides-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 80px); align-items: center; }
+.side-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.side-list li { font-size: clamp(40px, 7vw, 104px); font-weight: 200; line-height: 1; letter-spacing: -.03em; text-transform: uppercase; transition: font-weight .4s ease, opacity .4s ease, letter-spacing .4s ease; }
+.js .side-list li { opacity: .18; }
+.js .side-list li.on { opacity: 1; font-weight: 800; }
+.js #sides.merged .side-list li { opacity: 1; font-weight: 800; letter-spacing: -.045em; }
+.side-desc { display: grid; min-width: 0; }
+.side-desc > div { grid-area: 1 / 1; display: grid; gap: 14px; transition: opacity .4s ease, transform .4s ease; }
+.js .side-desc > div { opacity: 0; transform: translateY(16px); pointer-events: none; }
+.js .side-desc > div.on { opacity: 1; transform: none; pointer-events: auto; }
+.side-desc h3 { font-size: clamp(20px, 2.2vw, 28px); font-weight: 600; }
+.side-desc p { font-weight: 300; max-width: 42ch; }
+.no-js-hide { display: none; }
+.js .no-js-hide { display: grid; }
+
+/* 04 Work reel: horizontal */
+#work { height: 520vh; }
+#work .stage { padding-top: 64px; }
+.work-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.work-head h2 { font-size: clamp(32px, 4.4vw, 64px); font-weight: 800; letter-spacing: -.03em; line-height: .95; text-transform: uppercase; }
+.work-head p { max-width: 40ch; font-weight: 300; }
+.reel { display: flex; gap: clamp(16px, 2.5vw, 32px); will-change: transform; }
+.case { flex: 0 0 min(560px, 78vw); border: 1px solid var(--rule-on-white); background: #fff; padding: clamp(20px, 2.4vw, 30px); display: grid; gap: 14px; align-content: start; }
+.case .no { font-size: 48px; font-weight: 200; line-height: .8; letter-spacing: -.04em; }
+.case h3 { font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; line-height: 1.15; letter-spacing: -.01em; }
+.case dl { margin: 0; display: grid; grid-template-columns: 96px 1fr; gap: 10px 16px; font-size: 14px; }
+.case dt { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; padding-top: 3px; }
+.case dd { margin: 0; font-weight: 300; }
+.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--black); padding-top: 14px; gap: 12px; margin-top: auto; }
+.metrics b { display: block; font-size: clamp(22px, 2.6vw, 34px); font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.metrics span { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--grey); font-weight: 600; }
+.case.end { background: var(--black); color: var(--white); border-color: var(--black); align-content: center; }
+.case.end h3 { font-weight: 300; font-size: clamp(22px, 2.6vw, 34px); }
+
+/* 05 Consultancy */
+.firm { padding-block: clamp(80px, 12vw, 160px); display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(32px, 6vw, 96px); }
+.firm h2 { font-size: clamp(64px, 12vw, 180px); font-weight: 800; letter-spacing: -.05em; line-height: .85; text-transform: uppercase; }
+.firm-body { display: grid; gap: 32px; align-content: start; min-width: 0; }
+.firm-body .big { font-size: clamp(20px, 2.2vw, 28px); font-weight: 300; line-height: 1.4; }
+.services { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-on-black); }
+.services li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--rule-on-black); font-weight: 500; font-size: clamp(16px, 1.6vw, 20px); }
+.services li span { color: var(--grey); font-weight: 300; font-size: 13px; letter-spacing: .1em; }
+.firm-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+/* 06 Principles */
+#principles { height: 340vh; }
+.pr-wrap { display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 6vw, 96px); align-items: center; }
+.pr-num { font-size: clamp(120px, 24vw, 340px); font-weight: 800; line-height: .8; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.pr-items { display: grid; min-width: 0; }
+.pr-items > div { grid-area: 1 / 1; display: grid; gap: 16px; transition: opacity .45s ease, transform .45s ease; }
+.js .pr-items > div { opacity: 0; transform: translateY(24px); }
+.js .pr-items > div.on { opacity: 1; transform: none; }
+.pr-items h3 { font-size: clamp(34px, 5.6vw, 84px); font-weight: 800; text-transform: uppercase; letter-spacing: -.03em; line-height: .95; }
+.pr-items p { font-size: clamp(16px, 1.5vw, 19px); font-weight: 300; max-width: 44ch; }
+.pr-dots { display: flex; gap: 8px; margin-top: 28px; }
+.pr-dots i { width: 28px; height: 2px; background: var(--rule-on-white); }
+.pr-dots i.on { background: var(--black); }
+
+/* 07 Writing */
+.writing { padding-block: clamp(80px, 12vw, 160px); display: grid; gap: 48px; }
+.writing-head { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; }
+.writing-head h2 { font-size: clamp(44px, 8vw, 120px); font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; line-height: .9; }
+.writing-head h2 em { font-weight: 200; font-style: italic; }
+.writing-head p { font-weight: 300; font-size: clamp(16px, 1.5vw, 19px); max-width: 44ch; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags button { font: inherit; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; background: transparent; color: inherit; border: 1px solid var(--rule-on-black); padding: 8px 14px; cursor: pointer; border-radius: 999px; }
+.tags button[aria-pressed="true"] { background: var(--white); color: var(--black); border-color: var(--white); }
+.essays { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-on-black); }
+.essays li { display: grid; grid-template-columns: 110px 1fr auto; gap: 20px; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--rule-on-black); }
+.essays .cat { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--grey); }
+.essays h3 { font-size: clamp(18px, 2.2vw, 28px); font-weight: 500; letter-spacing: -.01em; line-height: 1.25; transition: padding .3s ease; }
+.essays li:hover h3 { padding-left: 10px; }
+.essays .yr { font-size: 12px; color: var(--grey); font-variant-numeric: tabular-nums; }
+.book { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; border: 1px solid var(--rule-on-black); padding: clamp(20px, 3vw, 36px); }
+.book-cover { width: 92px; aspect-ratio: 2 / 3; background: var(--white); color: var(--black); display: grid; place-items: center; font-weight: 800; font-size: 10px; letter-spacing: .2em; text-align: center; padding: 8px; }
+.book h3 { font-size: clamp(20px, 2.2vw, 28px); font-weight: 600; }
+.book p { font-weight: 300; color: var(--grey); }
+
+/* 08 Speaking & teaching */
+.speak { padding-block: clamp(80px, 12vw, 160px); display: grid; gap: 40px; }
+.speak h2 { font-size: clamp(40px, 7vw, 104px); font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; line-height: .9; }
+.speak-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--rule-on-white); border: 1px solid var(--rule-on-white); }
+.speak-grid > div { background: var(--white); padding: clamp(20px, 2.6vw, 32px); display: grid; gap: 10px; align-content: start; }
+.speak-grid h3 { font-size: 18px; font-weight: 700; }
+.speak-grid p { font-weight: 300; font-size: 15px; }
+.formats { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: clamp(22px, 3vw, 40px); font-weight: 200; letter-spacing: -.02em; text-transform: uppercase; }
+.formats span:nth-child(odd) { font-weight: 700; }
+
+/* 09 Timeline */
+.timeline { padding-block: clamp(80px, 12vw, 160px); display: grid; gap: 40px; }
+.timeline h2 { font-size: clamp(40px, 7vw, 104px); font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; line-height: .9; }
+.tl { list-style: none; margin: 0; padding: 0; position: relative; display: grid; gap: 0; }
+.tl::before { content: ""; position: absolute; left: 92px; top: 0; bottom: 0; width: 1px; background: var(--rule-on-black); }
+.tl-fill { position: absolute; left: 92px; top: 0; width: 1px; background: var(--white); height: 0; }
+.tl li { display: grid; grid-template-columns: 92px 1fr; gap: 0; padding: 22px 0; position: relative; }
+.tl li::before { content: ""; position: absolute; left: 88px; top: 31px; width: 9px; height: 9px; border-radius: 50%; background: var(--black); border: 1px solid var(--white); }
+.tl .when { font-size: 12px; font-weight: 600; letter-spacing: .14em; color: var(--grey); padding-top: 4px; font-variant-numeric: tabular-nums; }
+.tl .what { padding-left: 32px; display: grid; gap: 4px; }
+.tl h3 { font-size: clamp(18px, 2vw, 24px); font-weight: 600; }
+.tl p { font-weight: 300; color: var(--grey); font-size: 15px; }
+.tl li.now::before { background: var(--white); }
+
+/* 10 Now */
+.now { padding-block: clamp(80px, 12vw, 160px); display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(32px, 6vw, 96px); }
+.now h2 { font-size: clamp(64px, 12vw, 180px); font-weight: 800; letter-spacing: -.05em; line-height: .85; text-transform: uppercase; }
+.now-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule-on-white); border: 1px solid var(--rule-on-white); align-self: start; }
+.now-list > div { background: var(--white); padding: 22px; display: grid; gap: 6px; }
+.now-list .label { color: var(--grey); }
+.now-list p { font-weight: 500; font-size: 17px; line-height: 1.4; }
+
+/* 11 Life */
+.life { padding-block: clamp(80px, 12vw, 160px); display: grid; gap: 40px; }
+.life-quote { font-size: clamp(28px, 4.6vw, 64px); font-weight: 200; line-height: 1.15; letter-spacing: -.02em; max-width: 22ch; }
+.life-quote b { font-weight: 700; }
+.strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.strip > div { aspect-ratio: 3 / 4; max-width: 100%; background: repeating-linear-gradient(45deg, #1a1a1a 0 2px, #111 2px 10px); border: 1px solid var(--rule-on-black); display: grid; place-items: end start; padding: 10px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600; color: var(--grey); }
+.strip > div:nth-child(even) { margin-top: 40px; }
+
+/* 12 Work with me */
+.contact { padding-block: clamp(96px, 14vw, 200px); display: grid; gap: 48px; }
+.contact h2 { font-size: clamp(40px, 8vw, 128px); font-weight: 800; letter-spacing: -.045em; line-height: .9; text-transform: uppercase; max-width: 12ch; }
+.contact h2 span { font-weight: 200; }
+.ways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--black); }
+.ways > div { padding: 20px 20px 20px 0; border-bottom: 1px solid var(--rule-on-white); display: grid; gap: 6px; }
+.ways h3 { font-size: 15px; font-weight: 700; }
+.ways p { font-size: 14px; font-weight: 300; color: #555; }
+.reach { display: flex; flex-wrap: wrap; gap: 16px 40px; align-items: center; font-size: clamp(18px, 2.4vw, 30px); font-weight: 600; }
+.reach .email { border-bottom: 2px solid currentColor; }
+footer { padding-block: 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Responsive */
+@media (max-width: 860px) {
+  .hero, .sides-grid, .firm, .writing-head, .now, .pr-wrap { grid-template-columns: 1fr; }
+  .hero { padding-top: 96px; }
+  .portrait { max-width: 360px; }
+  .speak-grid { grid-template-columns: 1fr; }
+  .ways { grid-template-columns: 1fr 1fr; }
+  .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .strip > div:nth-child(n+4) { display: none; }
+  .essays li { grid-template-columns: 1fr auto; }
+  .essays .cat { grid-column: 1 / -1; }
+  .pr-num { font-size: 120px; }
+  .side-list li { font-size: clamp(36px, 11vw, 64px); }
+  /* Reel becomes a vertical stack on small screens */
+  #work { height: auto; }
+  #work .stage { position: static; height: auto; padding-block: 96px; }
+  .reel { flex-direction: column; transform: none !important; }
+  .case { flex: none; min-height: 0; }
+  .proto-note { left: 14px; right: 14px; max-width: none; }
+}
+@media (max-width: 520px) {
+  .now-list, .ways { grid-template-columns: 1fr; }
+  .metrics { grid-template-columns: 1fr 1fr; }
+  .case dl { grid-template-columns: 1fr; gap: 2px; }
+  .case dd { margin-bottom: 8px; }
+  .tl::before, .tl-fill { left: 70px; }
+  .tl li { grid-template-columns: 70px 1fr; }
+  .tl li::before { left: 66px; }
+  .tl .what { padding-left: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="topbar" aria-hidden="true"><span class="mono">F · O</span><span class="chap" id="chap">Intro</span></div>
+<div class="proto-note" role="note">Rough prototype. Copy is from Favour's voice note. Photos, numbers and titles are placeholders.</div>
+
+<main>
+  <!-- 01 HERO -->
+  <section class="dark gutter hero" data-chap="Intro" aria-label="Introduction">
+    <div style="display:grid;gap:36px;min-width:0">
+      <span class="label dim">A body of work</span>
+      <h1>Favour<span>Ogazi</span></h1>
+      <div class="roles"><span>Operator</span><span>Builder</span><span>Advisor</span><span>Writer</span></div>
+    </div>
+    <div class="hero-side">
+      <div class="portrait"><span class="ph">Portrait · from photo shoot</span></div>
+      <p class="intro">I lead operations in fintech, advise businesses through Fono, and write about work, life and everything in between. This is where all of it lives.</p>
+      <span class="scroll-cue">Scroll to begin</span>
+    </div>
+  </section>
+
+  <!-- 02 THE THREAD -->
+  <section class="scrolly light" id="thread" data-chap="The thread" aria-label="The thread">
+    <div class="stage gutter">
+      <span class="label dim" style="margin-bottom:28px">The thread</span>
+      <p class="thread-text" id="threadText">I take ideas, businesses, teams and messy situations, and make them work better.</p>
+      <div class="thread-meta">
+        <span class="label">How businesses run</span>
+        <span class="label">How people execute</span>
+        <span class="label">How things scale</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 FOUR SIDES -->
+  <section class="scrolly dark" id="sides" data-chap="One operator" aria-label="One operator, several sides">
+    <div class="stage gutter">
+      <div class="sides-grid">
+        <ul class="side-list" id="sideList">
+          <li>Operator</li>
+          <li>Advisor</li>
+          <li>Writer</li>
+          <li>Teacher</li>
+        </ul>
+        <div class="side-desc" id="sideDesc">
+          <div>
+            <span class="label dim">01 · First, always</span>
+            <h3>Operator</h3>
+            <p>Leading operations at a fintech. Strategy, team leadership, commerce, execution and business building, and increasingly AI and automation.</p>
+          </div>
+          <div class="no-js-hide">
+            <span class="label dim">02 · Founder</span>
+            <h3>Advisor</h3>
+            <p>Fono, nearly three years in. Pricing and business systems, operations advisory, AI implementation, growth and leadership for other businesses.</p>
+          </div>
+          <div class="no-js-hide">
+            <span class="label dim">03 · The heart</span>
+            <h3>Writer</h3>
+            <p>Writing is how I process and communicate what I see. Work, operations and AI, and also womanhood, friendship, faith and growing up.</p>
+          </div>
+          <div class="no-js-hide">
+            <span class="label dim">04 · Passion</span>
+            <h3>Teacher</h3>
+            <p>Weekends spent teaching marketing and content creation at a London and Lagos tech academy, plus workshops, panels and classes.</p>
+          </div>
+          <div class="no-js-hide">
+            <span class="label dim">One body of work</span>
+            <h3>Not four people. One builder.</h3>
+            <p>Each side feeds the others: running the business, advising other businesses, writing to make sense of it, teaching what I learn.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 WORK REEL -->
+  <section class="scrolly light" id="work" data-chap="Selected work" aria-label="Selected work">
+    <div class="stage gutter">
+      <div class="work-head">
+        <div style="display:grid;gap:14px">
+          <span class="label dim">Selected work · Case studies</span>
+          <h2>The work,<br>shown.</h2>
+        </div>
+        <p>Operations is hard to measure, so each case study covers what I built, the people involved, and the numbers I can share.</p>
+      </div>
+      <div class="reel" id="reel">
+        <article class="case">
+          <span class="no">01</span>
+          <h3>Building a trade desk from the ground up</h3>
+          <dl>
+            <dt>Context</dt><dd>A fintech that needed a trading capability it didn't have yet.</dd>
+            <dt>What I built</dt><dd>The desk's processes, tools, controls and the team that runs it.</dd>
+            <dt>Role</dt><dd>Operations lead</dd>
+          </dl>
+          <div class="metrics">
+            <div><b>—</b><span>Volume</span></div>
+            <div><b>—</b><span>Time to launch</span></div>
+            <div><b>—</b><span>Team</span></div>
+          </div>
+          <span class="ph" style="justify-self:start">Figures to confirm</span>
+        </article>
+        <article class="case">
+          <span class="no">02</span>
+          <h3>Liquidity &amp; cross-border payments</h3>
+          <dl>
+            <dt>Context</dt><dd>Moving money across borders reliably, at scale.</dd>
+            <dt>What I built</dt><dd>Liquidity management and the operating rhythm behind cross-border payment flows.</dd>
+            <dt>Before → after</dt><dd>To be documented together.</dd>
+          </dl>
+          <div class="metrics">
+            <div><b>—</b><span>Transactions</span></div>
+            <div><b>—</b><span>Markets</span></div>
+            <div><b>—</b><span>Efficiency</span></div>
+          </div>
+          <span class="ph" style="justify-self:start">Figures to confirm</span>
+        </article>
+        <article class="case">
+          <span class="no">03</span>
+          <h3>Go-to-market expansion</h3>
+          <dl>
+            <dt>Context</dt><dd>Taking a product into new markets.</dd>
+            <dt>What I built</dt><dd>The launch processes and cross-functional execution that made it work.</dd>
+            <dt>Lesson</dt><dd>To be written with Favour.</dd>
+          </dl>
+          <div class="metrics">
+            <div><b>—</b><span>Revenue</span></div>
+            <div><b>—</b><span>New markets</span></div>
+            <div><b>—</b><span>Weeks</span></div>
+          </div>
+          <span class="ph" style="justify-self:start">Figures to confirm</span>
+        </article>
+        <article class="case">
+          <span class="no">04</span>
+          <h3>Operations systems &amp; the people behind them</h3>
+          <dl>
+            <dt>Context</dt><dd>A growing business that needed to run without depending on any one person.</dd>
+            <dt>What I built</dt><dd>Operating systems, documentation, tools, and the people I developed along the way.</dd>
+            <dt>Principle</dt><dd>Documentation, communication and AI-forward thinking.</dd>
+          </dl>
+          <div class="metrics">
+            <div><b>—</b><span>Processes</span></div>
+            <div><b>—</b><span>People grown</span></div>
+            <div><b>—</b><span>Hours saved</span></div>
+          </div>
+          <span class="ph" style="justify-self:start">Figures to confirm</span>
+        </article>
+        <article class="case end">
+          <span class="label dim">More coming</span>
+          <h3>Every case study follows the same template, so documenting new work becomes a habit.</h3>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 FONO -->
+  <section class="dark gutter firm" data-chap="Fono" aria-label="Fono">
+    <div style="display:grid;gap:20px;align-content:start">
+      <span class="label dim">The firm · Nearly three years in</span>
+      <h2>Fono</h2>
+    </div>
+    <div class="firm-body">
+      <p class="big">Fono is where I advise businesses outside my day job. It's another side of me: founder and advisor, not just operator.</p>
+      <ul class="services">
+        <li>Business &amp; pricing systems <span>01</span></li>
+        <li>Operations advisory <span>02</span></li>
+        <li>AI implementation <span>03</span></li>
+        <li>Growth strategy <span>04</span></li>
+        <li>Leadership <span>05</span></li>
+      </ul>
+      <div class="firm-row">
+        <span class="ph">Selected clients</span><span class="ph">Testimonials</span><span class="ph">Link to Fono site</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 PRINCIPLES -->
+  <section class="scrolly light" id="principles" data-chap="How I work" aria-label="How I work">
+    <div class="stage gutter">
+      <span class="label dim" style="margin-bottom:24px">Three things shape how I work</span>
+      <div class="pr-wrap">
+        <div class="pr-num" id="prNum">1</div>
+        <div>
+          <div class="pr-items" id="prItems">
+            <div>
+              <h3>Documentation</h3>
+              <p>It's easy to do significant work and move on without capturing what happened. I write it down: what I did, what I contributed, what came of it.</p>
+            </div>
+            <div class="no-js-hide">
+              <h3>Communication</h3>
+              <p>Good ideas only become reality when the people carrying them understand them. Clear, early, often.</p>
+            </div>
+            <div class="no-js-hide">
+              <h3>AI-forward thinking</h3>
+              <p>Using automation and AI to make teams faster and systems smarter, in operations and in the businesses I advise.</p>
+            </div>
+          </div>
+          <div class="pr-dots" id="prDots"><i class="on"></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 WRITING -->
+  <section class="dark gutter writing" data-chap="Writing" aria-label="Writing">
+    <div class="writing-head">
+      <div style="display:grid;gap:16px">
+        <span class="label dim">Writing · The permanent home</span>
+        <h2>Ideas,<br><em>over time</em></h2>
+      </div>
+      <p>Years of writing that used to live across Instagram, LinkedIn, X and newsletters, now in one place. Come back in ten years and you can trace how my thinking has changed.</p>
+    </div>
+    <div class="tags" role="group" aria-label="Filter essays">
+      <button type="button" aria-pressed="true" data-f="all">All</button>
+      <button type="button" aria-pressed="false" data-f="work">Work &amp; operations</button>
+      <button type="button" aria-pressed="false" data-f="tech">Technology &amp; AI</button>
+      <button type="button" aria-pressed="false" data-f="life">Life</button>
+    </div>
+    <ul class="essays" id="essays">
+      <li data-c="work"><span class="cat">Operations</span><h3>What nobody tells you about running operations</h3><span class="yr">Sample</span></li>
+      <li data-c="life"><span class="cat">Friendship</span><h3>The friendships that carried me through my twenties</h3><span class="yr">Sample</span></li>
+      <li data-c="tech"><span class="cat">AI</span><h3>Where AI actually helps an operations team</h3><span class="yr">Sample</span></li>
+      <li data-c="life"><span class="cat">Womanhood</span><h3>On ambition, at 27</h3><span class="yr">Sample</span></li>
+      <li data-c="work"><span class="cat">Leadership</span><h3>Documentation is a leadership skill</h3><span class="yr">Sample</span></li>
+      <li data-c="life"><span class="cat">Faith</span><h3>Growing up, and growing into faith</h3><span class="yr">Sample</span></li>
+    </ul>
+    <div class="book">
+      <div class="book-cover">THE BOOK</div>
+      <div style="display:grid;gap:6px;min-width:0">
+        <span class="label dim">In the works</span>
+        <h3>A book is coming.</h3>
+        <p>Working title, topic and timing to come from Favour.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 SPEAKING & TEACHING -->
+  <section class="light gutter speak" data-chap="Speaking" aria-label="Speaking and teaching">
+    <span class="label dim">Speaking · Teaching · Public work</span>
+    <h2>In the room</h2>
+    <div class="formats"><span>Workshops</span><span>Panels</span><span>Interviews</span><span>Podcasts</span><span>Classes</span></div>
+    <div class="speak-grid">
+      <div><span class="label dim">Teaching</span><h3>Tech academy, London &amp; Lagos</h3><p>Weekend classes on marketing and content creation for students starting out in tech.</p></div>
+      <div><span class="label dim">Speaking</span><h3>Panels &amp; conversations</h3><p>Operations, fintech, careers and AI.</p><span class="ph" style="justify-self:start">Event list to add</span></div>
+      <div><span class="label dim">Book me for</span><h3>Talks &amp; workshops</h3><p>Operations, execution, documentation, content and storytelling.</p></div>
+    </div>
+  </section>
+
+  <!-- 09 TIMELINE -->
+  <section class="dark gutter timeline" id="timeline" data-chap="Archive" aria-label="Archive timeline">
+    <span class="label dim">Archive · Milestones</span>
+    <h2>The archive</h2>
+    <ol class="tl" id="tl">
+      <li><span class="when">EARLY</span><div class="what"><h3>Writing, long before the titles</h3><p>Years of writing that many people first knew me for.</p></div></li>
+      <li><span class="when">~2023</span><div class="what"><h3>Fono founded</h3><p>Advising businesses beyond the day job.</p></div></li>
+      <li><span class="when">—</span><div class="what"><h3>Teaching at the tech academy</h3><p>Marketing and content creation, London and Lagos.</p></div></li>
+      <li><span class="when">—</span><div class="what"><h3>Leading operations in fintech</h3><p>Trade desk, liquidity, cross-border payments, go-to-market.</p></div></li>
+      <li class="now"><span class="when">NOW</span><div class="what"><h3>Building towards bigger leadership</h3><p>And a book, and a few experiments.</p></div></li>
+      <li><span class="when">NEXT</span><div class="what"><h3>Room to grow</h3><p>Companies, board seats, investments, books. Each will have a place here.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- 10 NOW -->
+  <section class="light gutter now" data-chap="Now" aria-label="Now">
+    <div style="display:grid;gap:20px;align-content:start">
+      <span class="label dim">Updated every few months</span>
+      <h2>Now</h2>
+    </div>
+    <div class="now-list">
+      <div><span class="label">Working on</span><p>Operations at a fintech, and Fono.</p></div>
+      <div><span class="label">Writing</span><p>The book.</p></div>
+      <div><span class="label">Experimenting with</span><p>Fitness: walks, then runs.</p></div>
+      <div><span class="label">Thinking about</span><p>A tangible product business. Someday, not yet.</p></div>
+    </div>
+  </section>
+
+  <!-- 11 LIFE -->
+  <section class="dark gutter life" data-chap="Life" aria-label="Beyond work">
+    <span class="label dim">Beyond the work</span>
+    <p class="life-quote">If I'm not working, I'm <b>writing</b>, with my <b>friends</b>, watching <b>movies</b>, or seeing <b>family</b>.</p>
+    <div class="strip" aria-hidden="true">
+      <div>Travel</div><div>Friends</div><div>Community</div><div>Learning</div><div>Family</div>
+    </div>
+  </section>
+
+  <!-- 12 WORK WITH ME -->
+  <section class="light gutter contact" data-chap="Work with me" aria-label="Work with me">
+    <span class="label dim">If we're aligned</span>
+    <h2>Here's how <span>to reach me.</span></h2>
+    <div class="ways">
+      <div><h3>Leadership roles</h3><p>Executive and operating roles.</p></div>
+      <div><h3>Advisory &amp; consulting</h3><p>Through Fono.</p></div>
+      <div><h3>Speaking &amp; teaching</h3><p>Talks, panels, workshops, classes.</p></div>
+      <div><h3>Writing &amp; partnerships</h3><p>Collaborations, bylines and, later, investments.</p></div>
+    </div>
+    <div class="reach"><span class="email">hello@favourogazi.com</span><span class="ph">Placeholder email</span></div>
+  </section>
+
+  <footer class="dark gutter"><span>Favour Ogazi</span><span class="dim">A living archive · Prototype v0.1</span></footer>
+</main>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Split thread statement into words
+  const tt = document.getElementById('threadText');
+  const words = tt.textContent.trim().split(/\s+/);
+  tt.innerHTML = words.map(w => '<span class="w">' + w + '</span>').join(' ');
+  const wEls = tt.querySelectorAll('.w');
+
+  const progressEl = document.getElementById('progress');
+  const chapEl = document.getElementById('chap');
+  const sides = document.getElementById('sides');
+  const sideLis = document.querySelectorAll('#sideList li');
+  const sideDescs = document.querySelectorAll('#sideDesc > div');
+  const work = document.getElementById('work');
+  const reel = document.getElementById('reel');
+  const pr = document.getElementById('principles');
+  const prItems = document.querySelectorAll('#prItems > div');
+  const prDots = document.querySelectorAll('#prDots i');
+  const prNum = document.getElementById('prNum');
+  const tl = document.getElementById('tl');
+  const fill = document.createElement('span'); fill.className = 'tl-fill'; tl.appendChild(fill);
+  const chapters = document.querySelectorAll('[data-chap]');
+
+  function prog(el) {
+    const r = el.getBoundingClientRect();
+    const span = r.height - innerHeight;
+    if (span <= 0) return r.top < 0 ? 1 : 0;
+    return Math.min(1, Math.max(0, -r.top / span));
+  }
+  function setOn(list, idx) { list.forEach((el, i) => el.classList.toggle('on', i === idx)); }
+
+  function update() {
+    const doc = document.documentElement;
+    progressEl.style.transform = 'scaleX(' + (scrollY / (doc.scrollHeight - innerHeight || 1)) + ')';
+
+    // Thread: reveal words
+    const pt = prog(document.getElementById('thread'));
+    const n = Math.round(Math.min(1, pt * 1.25) * wEls.length);
+    wEls.forEach((w, i) => w.classList.toggle('on', i < Math.max(1, n)));
+
+    // Sides: 4 roles then merge
+    const ps = prog(sides);
+    const si = Math.min(4, Math.floor(ps * 5));
+    sides.classList.toggle('merged', si === 4);
+    setOn(sideLis, si < 4 ? si : -1);
+    setOn(sideDescs, si);
+
+    // Work reel: horizontal translate (wide screens only)
+    if (innerWidth > 860) {
+      const pw = prog(work);
+      const max = reel.scrollWidth - reel.parentElement.clientWidth + parseFloat(getComputedStyle(reel.parentElement).paddingLeft);
+      reel.style.transform = 'translateX(' + (-Math.max(0, max) * pw) + 'px)';
+    } else { reel.style.transform = ''; }
+
+    // Principles
+    const pp = prog(pr);
+    const pi = Math.min(2, Math.floor(pp * 3));
+    setOn(prItems, pi); setOn(prDots, pi); prNum.textContent = pi + 1;
+
+    // Timeline fill
+    const r = tl.getBoundingClientRect();
+    const f = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+    fill.style.height = (f * 100) + '%';
+
+    // Chapter label
+    let cur = chapters[0];
+    chapters.forEach(c => { if (c.getBoundingClientRect().top <= innerHeight * 0.4) cur = c; });
+    chapEl.textContent = cur.dataset.chap;
+  }
+
+  let ticking = false;
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(() => { update(); ticking = false; }); } }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  update();
+
+  // Writing filters
+  const btns = document.querySelectorAll('.tags button');
+  const items = document.querySelectorAll('#essays li');
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    items.forEach(li => { li.hidden = !(b.dataset.f === 'all' || li.dataset.c === b.dataset.f); });
+  }));
+})();
+</script>
+
+</body>
+</html>
