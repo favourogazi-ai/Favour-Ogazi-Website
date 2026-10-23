@@ -3,6 +3,18 @@
   var doc = document.documentElement;
   doc.classList.add('js');
 
+  // Every page opens at the top, or exactly at the linked section (#id)
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  function goToHash(smooth) {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var t = id && document.getElementById(id);
+    if (t) { var y = t.getBoundingClientRect().top + scrollY - ((document.querySelector('.nav') || {}).offsetHeight || 72) - 8; window.scrollTo({ top: Math.max(0, y), behavior: smooth ? 'smooth' : 'auto' }); }
+    else if (!id) window.scrollTo(0, 0);
+  }
+  goToHash(false);
+  addEventListener('load', function () { goToHash(false); });
+  addEventListener('hashchange', function () { goToHash(true); });
+
   // Photo slots: show the image only once it loads
   document.querySelectorAll('.photo img').forEach(function (img) {
     function ok() { img.parentElement.classList.add('has-img'); }
@@ -13,11 +25,17 @@
   // Mobile menu
   var nav = document.querySelector('.nav');
   var btn = document.querySelector('.menu-btn');
-  if (btn) btn.addEventListener('click', function () {
-    var open = nav.classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(open));
-    btn.textContent = open ? 'Close' : 'Menu';
-  });
+  var scrim = document.createElement('div'); scrim.className = 'menu-scrim'; document.body.appendChild(scrim);
+  function setMenu(open) {
+    nav.classList.toggle('open', open); scrim.classList.toggle('on', open);
+    btn.setAttribute('aria-expanded', String(open)); btn.textContent = open ? 'Close' : 'Menu';
+  }
+  if (btn) {
+    btn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+    scrim.addEventListener('click', function () { setMenu(false); });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') setMenu(false); });
+    nav.querySelectorAll('.nav-links a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+  }
 
   // Split words for reveal text
   var wordGroups = [];
@@ -90,6 +108,16 @@
     }
   }
 
+  if (sidesWrap) {
+    sidesWrap.querySelectorAll('.side-list li').forEach(function (li, i) {
+      li.addEventListener('click', function () {
+        var steps = sidesWrap.querySelectorAll('.side-panels > div').length;
+        var span = sidesWrap.offsetHeight - innerHeight;
+        window.scrollTo({ top: sidesWrap.offsetTop + span * ((i + 0.5) / steps), behavior: 'smooth' });
+      });
+    });
+  }
+
   var ticking = false;
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { update(); ticking = false; }); } }
   addEventListener('scroll', onScroll, { passive: true });
@@ -126,8 +154,13 @@
         btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
         var f = b.getAttribute('data-f');
         target.querySelectorAll('[data-c]').forEach(function (it) {
-          it.hidden = !(f === 'all' || (' ' + it.getAttribute('data-c') + ' ').indexOf(' ' + f + ' ') > -1);
+          var show = f === 'all' || (' ' + it.getAttribute('data-c') + ' ').indexOf(' ' + f + ' ') > -1;
+          it.hidden = !show;
+          if (it.id) { var l = document.querySelector('.index-list a[href="#' + it.id + '"]'); if (l) l.parentElement.hidden = !show; }
         });
+        var first = target.querySelector('[data-c]:not([hidden])');
+        var top = target.getBoundingClientRect().top + scrollY - 120;
+        if (scrollY > top) window.scrollTo({ top: top, behavior: 'smooth' });
       });
     });
   });
