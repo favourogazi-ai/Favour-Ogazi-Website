@@ -400,7 +400,7 @@ def work():
     projects = "".join("""
       <article class="project rv" id="p-{slug}" data-c="{tags}">
         <a href="work-{slug}.html">{ph}</a>
-        <div class="meta"><span class="label">{kind}</span><span class="label muted">{org}</span><span class="label muted">{year}</span></div>
+        <div class="meta"><span class="label">{kind}</span></div>
         <h2><a href="work-{slug}.html">{title}</a></h2>
         <p>{summary}</p>
         <a class="link-arrow" href="work-{slug}.html">Read case study</a>
@@ -494,6 +494,14 @@ def fono():
     <p class="reveal-text" data-words>Too many founders are passionate, dedicated but overwhelmed. We take the overwhelm away and reinforce clarity.</p>
   </div></div>
 </section>
+<section class="section dark" id="projects">
+  <div class="wrap" style="display:grid;gap:28px">
+    <p class="label muted">Selected FONO projects</p>
+    <p class="h-lg" style="max-width:24ch">18 businesses and institutions, from fintech startups to state governments.</p>
+    <p class="muted" style="max-width:70ch">{names} and more.</p>
+    <a class="btn" href="fono-projects.html" style="justify-self:start">See FONO projects</a>
+  </div>
+</section>
 <section class="section white">
   <div class="wrap grid-2">
     <div style="display:grid;gap:18px;align-content:start"><p class="label muted">How we think</p><h2 class="h-lg">Your trusted <span class="serif-i">copilots.</span></h2></div>
@@ -513,14 +521,6 @@ def fono():
   <div class="wrap" style="display:grid;gap:48px">
     <div style="display:grid;gap:14px"><p class="label muted">How we work</p><h2 class="h-xl">Idea to <em>execution.</em></h2></div>
     <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">{st}</div>
-  </div>
-</section>
-<section class="section white">
-  <div class="wrap" style="display:grid;gap:28px">
-    <p class="label muted">Selected FONO projects</p>
-    <p class="h-lg" style="max-width:24ch">18 businesses and institutions, from fintech startups to state governments.</p>
-    <p class="muted" style="max-width:70ch">{names} and more.</p>
-    <a class="btn" href="fono-projects.html" style="justify-self:start">See FONO projects</a>
   </div>
 </section>
 """.format(svc=svc, st=st, names=names)

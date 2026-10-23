@@ -70,11 +70,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .nav-links { position: fixed; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 6px); left: 12px; right: 12px; flex-direction: column; align-items: stretch; gap: 0; background: var(--white); color: var(--ink); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,.22), 0 2px 8px rgba(0,0,0,.08); padding: 10px 22px 18px; transform: translateY(-10px) scale(.98); transform-origin: top right; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; max-height: calc(100svh - var(--nav-h) - 30px); overflow-y: auto; }
   .nav-links li { border-bottom: 1px solid var(--line); }
   .nav-links li:last-child { border-bottom: 0; padding-top: 14px; }
-  .nav-links a { font-size: 26px; font-weight: 600; letter-spacing: -.02em; padding: 14px 0; opacity: 1; display: flex; justify-content: space-between; align-items: center; }
+  .nav-links a { font-family: var(--serif); font-style: italic; font-size: 22px; font-weight: 400; letter-spacing: -.01em; padding: 11px 0; opacity: 1; display: flex; justify-content: space-between; align-items: center; }
   .nav-links a::before { content: none; }
   .nav-links li:not(:last-child) a::after { content: "→" !important; position: static !important; height: auto !important; background: none !important; font-size: 18px; color: var(--grey); }
   .nav-links a[aria-current="page"] { font-family: var(--serif); font-style: italic; font-weight: 400; }
-  .nav-cta { justify-content: center !important; background: var(--ink); color: var(--white) !important; border: 0; border-radius: 999px; padding: 16px 0 !important; font-size: 15px !important; letter-spacing: .04em !important; }
+  .nav-cta { justify-content: center !important; background: var(--ink); color: var(--white) !important; border: 0; border-radius: 999px; padding: 14px 0 !important; font-size: 17px !important; letter-spacing: 0 !important; }
   .nav.open .nav-links { opacity: 1; transform: none; pointer-events: auto; }
   .menu-scrim { position: fixed; inset: 0; background: rgba(10,10,10,.35); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 40; }
   .menu-scrim.on { opacity: 1; pointer-events: auto; }
