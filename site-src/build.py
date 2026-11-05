@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Builds Favour Ogazi's static site into ../public.
-Edit the CONTENT section below, then run:  python3 build.py
+Edit the CONTENT section, then run:  python3 site-src/build.py
 Works with Python 3.8+ (including the Python that ships with macOS).
 """
 import html, pathlib, shutil
@@ -10,8 +10,7 @@ OUT = SRC.parent / "public"
 
 # ======================================================================= CONTENT
 EMAIL = "thefavourogazi@gmail.com"
-# Placeholder until the dedicated newsletter / waiting list is set up
-WAITLIST_URL = "https://favoursnewsletter.substack.com/subscribe"
+WAITLIST_URL = "https://favoursnewsletter.substack.com/subscribe"  # placeholder until the waiting list exists
 LINKS = {
     "LinkedIn": "https://www.linkedin.com/in/favour-ogazi",
     "Substack": "https://favoursnewsletter.substack.com",
@@ -20,260 +19,273 @@ LINKS = {
     "X": "https://x.com/favour_ogazi",
 }
 
-# ---- Portfolio case studies (Work page). tags: "ops" or "projects"
+# ---- The record: proof at a glance (homepage)
+RECORD = [
+    ("95%+", "of KYC checks completed within 24 hours, after I built DNI Pay's verification workflow"),
+    ("+1,868%", "growth in Lagos Liga's impressions in a single month"),
+    ("70%", "email open rate for the National MSME Conference, 3.2× the industry average"),
+    ("40%", "of TechUnwind Fest attendees went on to become users"),
+    ("18", "businesses and institutions advised through FONO"),
+    ("2+ yrs", "building DNI Pay's operations, from first hire to a live payments product"),
+    ("6,000+", "readers on my newsletter"),
+    ("540K", "views on a single idea I shared on X"),
+]
+
+WORKED_WITH = ["Mighty", "DNI Pay", "gamp", "Kaduna State Government", "PTDF", "Lagos Liga", "TechUnwind Fest",
+               "National MSME Conference", "TOS Group", "Earna", "IMAGIO", "Gatewood Consulting"]
+
+EXPERIENCE = [
+    ("Dec 2025 – now", "Operations Lead", "Mighty", "I run operations for a B2B fintech moving money across borders: the trade desk, treasury, client onboarding with compliance, and the weekly rhythm that keeps it all accountable."),
+    ("2023 – now", "Founder", "FONO Consulting", "An advisory firm for founders. We work on how a business is run, priced and grown. 18 engagements so far, from startups to state governments."),
+    ("Aug 2023 – now", "Business Development Manager", "DNI Pay", "Built the company's structure, policies, hiring and budgets from the beginning, and the operations behind its live payments product."),
+    ("Jan – Jul 2024", "Marketing Communications Specialist", "gamp", "Led a team of four and kept cross-functional projects moving with clear schedules and weekly check-ins."),
+    ("2022 – 2023", "Co-founder", "Krieit Kulture", "Wrote the business plan, raised early capital and launched a new product line."),
+    ("2022 – 2023", "Business Analyst", "Gatewood Consulting", "Gap analysis, market research and launch plans for clients."),
+    ("Jan – Jun 2021", "Operations Manager", "EastPro Logistics", "Daily operations, scheduling, P&L reviews and hiring on site."),
+    ("2019 – 2020", "Protocol Assistant", "National Defence College", "Protocol for senior government officials and foreign dignitaries."),
+]
+EDUCATION = "MSc Business and Management, Aston University · BSc Microbiology, Federal University of Agriculture, Abeokuta · Operations Management, University of Pennsylvania (online) · McKinsey Forward Program"
+
+# ---- Case studies (Work page). tags: "ops" or "projects"
 CASES = [
     dict(slug="mighty-treasury", tags="ops", kind="Operations",
-         title="Building treasury and cross-border payment operations", short="Treasury & cross-border payments",
+         title="Building treasury and cross-border payment operations", short="Mighty",
          org="Mighty", role="Operations Lead", year="Dec 2025 – now",
-         summary="Running operations for a B2B fintech in cross-border payments, foreign exchange and treasury, across trading, product and compliance.",
-         context="Mighty provides cross-border payments, foreign exchange and treasury infrastructure for businesses. As the business grew, its operations needed to keep pace across trading, product and compliance.",
-         problem="Manual trading processes, many moving parts across payment and liquidity corridors, and teams that needed one shared operating rhythm.",
-         built=["Moved manual trading processes onto Mighty's in-house treasury platform, working with the product team on adoption, client walkthroughs and onboarding.",
-                "Oversee trade desk execution: client transactions, liquidity sourcing, settlement follow-up and reconciliation.",
-                "Coordinate due diligence and onboarding with compliance and legal, taking clients from documentation to live transactions.",
-                "Drive quarterly priorities, weekly reporting and scorecards, with operating rhythms and accountability built on EOS."],
+         summary="Running the operating side of a B2B fintech that moves money across borders, from the trade desk to the weekly scorecard.",
+         context="Mighty gives businesses cross-border payments, foreign exchange and treasury infrastructure. When I joined, the company was growing faster than its processes. A lot of trading still happened by hand, and trading, product and compliance each had their own way of working.",
+         problem="Money only moves well when everything around it is in step: liquidity in the right place, a trade desk that executes cleanly, onboarding that doesn't stall, and teams that agree on what matters this week.",
+         built=["Moved manual trading onto Ramp, Mighty's in-house treasury product, working with the product team on adoption, client walkthroughs and onboarding.",
+                "Run trade desk execution day to day: client transactions, liquidity sourcing, settlement follow-up and reconciliation with traders and partners.",
+                "Work with compliance and legal to close documentation gaps and get new clients to their first live transaction.",
+                "Set quarterly priorities, weekly reporting and scorecards for trading volume, revenue and active clients, using EOS to build the operating rhythm."],
          metrics=[("—", "Trading volume growth"), ("—", "Active clients"), ("—", "Faster settlement")],
-         metrics_note="Figures to confirm with Favour. Percentages only.",
-         lesson="Operations in fintech is trust made visible. Every settled transaction is a promise kept.",
+         metrics_note="Outcomes coming soon.",
+         lesson="In payments, operations is how trust becomes visible. Every settled transaction is a promise kept.",
          quote=None, video=None),
     dict(slug="dni", tags="ops", kind="Operations",
          title="Building DNI Pay's operations from the ground up", short="DNI Pay",
-         org="DNI / DNI Pay", role="Head of Business Management & Operations", year="2023 – 2025",
-         summary="From a new security startup to a live payments platform: team structure, strategy, launch and the systems that run it.",
-         context="DNI began in August 2023 as a new tech startup focused on estate and building security. By the end of 2024 it had pivoted and relaunched as DNI Pay, a digital payments platform built to make transactions faster, safer and more accessible across Africa.",
-         problem="A young company needed an operational and strategic backbone: structure, hiring, a go-to-market plan, and systems ready for a live payments product.",
-         built=["Redefined the team structure, set organisational OKRs and built the first hiring processes for design, development and sales.",
-                "Wrote a 12-month market entry plan, overhauled every digital platform and led the company's first major public launch event.",
-                "Updated pitch decks and company profiles for funding conversations, introduced HR and finance policies, negotiated vendor contracts and managed budgets.",
-                "When DNI Pay went live in August 2025, built customer experience, KYC verification, HR and finance tracking systems, plus five new partnership agreements."],
-         metrics=[("95%+", "KYC verified within 24 hours"), ("90%", "Issues resolved within 24 hours"), ("<10 min", "Average response time")],
-         metrics_note="Also: 2,000+ active users within 21 days of launch, 5 new partnerships and 2 new markets scoped.",
-         lesson="Building a business from scratch, then running it after go-live, is a different discipline from advising one. Strategy only counts when it ships.",
+         org="DNI / DNI Pay", role="Business management & operations", year="2023 – 2025",
+         summary="From a young security startup to a live payments platform: structure, hiring, strategy, launch, and everything needed to run it afterwards.",
+         context="DNI started in August 2023 as a tech startup focused on estate and building security. By the end of 2024 it had pivoted and relaunched as DNI Pay, a payments platform built to make transactions faster, safer and easier across Africa. I was there from the start.",
+         problem="A young company with a big idea and very little structure. It needed a team, a plan for the market, policies people could follow, and systems ready for real money on day one.",
+         built=["Designed the team structure, set company OKRs and built the first hiring processes for design, development and sales.",
+                "Wrote a 12-month market entry plan, rebuilt the digital platforms and led the company's first big public launch.",
+                "Updated the pitch decks for funding conversations, introduced HR and finance policies, negotiated vendor contracts and managed budgets.",
+                "When DNI Pay went live in August 2025, set up customer support, KYC verification, HR records and finance tracking, and signed five new partnerships."],
+         metrics=[("95%+", "KYC checks done within 24 hours"), ("90%", "Transaction issues fixed within 24 hours"), ("<10 min", "Average response to users")],
+         metrics_note="Also: 2,000+ active users within 21 days of launch, five new partnerships and two new markets researched.",
+         lesson="Advising a business and running one are different jobs. This was the one where the strategy had to work on Monday morning.",
          quote=("Thank you for putting in extra effort to ensure everything goes well for DNI. Thank you for making our lives easier. I do not take anything you do for granted; I mean it.", "Olayinka Olaoye", "Co-founder & CEO, DNI Pay"),
          video=None),
     dict(slug="gamp", tags="projects", kind="Projects",
-         title="Marketing communications and project delivery at gamp", short="gamp",
+         title="Marketing and project delivery at gamp", short="gamp",
          org="gamp technology", role="Marketing Communications Specialist", year="Jan – Jul 2024",
-         summary="Leading a four-person marketing team and cross-functional projects, with campaigns built on data and community.",
-         context="gamp needed marketing that grew brand awareness and customer acquisition, and projects that shipped on time across marketing, sales and communications.",
-         problem="Many teams, many deadlines, and a community that needed content it actually cared about.",
-         built=["Led a team of four marketing professionals to plan and execute campaigns.",
-                "Analysed marketing data to spot trends and shape what came next.",
-                "Worked with marketing, sales and communications to create content that resonated with the community.",
-                "Ran project schedules and weekly stakeholder meetings to keep cross-functional projects on track."],
+         summary="Leading a small marketing team and keeping cross-functional projects on schedule, with campaigns shaped by data and the community.",
+         context="gamp needed marketing that grew awareness and brought in customers, and projects that shipped on time across marketing, sales and communications.",
+         problem="Several teams, several deadlines, and a community that only responds to content it genuinely cares about.",
+         built=["Led a team of four marketers through planning and running campaigns.",
+                "Read the marketing data each cycle to see what was working and adjust the next campaign.",
+                "Worked with sales and communications on content that felt like it came from the community, not at it.",
+                "Kept projects on track with clear schedules and weekly stakeholder check-ins."],
          metrics=[("4", "Marketers led"), ("Weekly", "Stakeholder reviews"), ("—", "Engagement growth")],
-         metrics_note="Engagement figures to confirm with Favour.",
-         lesson="Good projects are mostly good communication: the right people knowing the right things at the right time.",
+         metrics_note="Engagement figures to confirm.",
+         lesson="Most project problems are communication problems. The right people knowing the right thing at the right time fixes a lot.",
          quote=("Favour, I wanted to say you were a great addition to the team. Good luck in all your future endeavors, and let me know whenever you need me or the team.", "Boluwatife Omotayo", "Co-founder & CEO, gamp technology"),
          video=None),
     dict(slug="lagos-liga-2024", tags="projects", kind="Projects",
          title="Turning Lagos Liga into a content business", short="Lagos Liga",
-         org="Lagos Liga · via FONO", role="Social media & content strategy", year="2024 – 2025",
-         summary="Running five platforms for one of Africa's largest recreational football leagues, and growing it into a brand people talk about between matches.",
-         context="Lagos Liga is one of Africa's largest private recreational football leagues, bringing together non-professional footballers, ex-players and fans. The brand had real energy, but it hadn't turned that into digital presence.",
-         problem="Great matches, quiet channels. The league needed to stay relevant between game days and give its community a reason to share.",
-         built=["Took over Instagram, Facebook, TikTok, YouTube and X at the same time, plus live coverage of physical and virtual events.",
-                "Identified what made Lagos Liga unique among football leagues and made it impossible to ignore.",
-                "Spotlighted everyone: club owners, coaches, players, partners and vendors, so each stakeholder wanted to share.",
-                "Repositioned the league as a content business that stays relevant between matches."],
-         metrics=[("+1,868%", "Impressions in one month"), ("+2,098%", "New followers"), ("+75%", "Engagement rate, to 5.1%")],
-         metrics_note="Also trended on X organically, with no paid push.",
-         lesson="When people feel seen, they amplify for free. The fastest growth came from making every stakeholder feel important.",
+         org="Lagos Liga · through FONO", role="Social media & content strategy", year="2024 – 2025",
+         summary="Five platforms for one of Africa's largest recreational football leagues, and a brand people kept talking about between matches.",
+         context="Lagos Liga is one of Africa's largest private recreational football leagues: non-professional players, ex-players and fans competing for serious prizes. The league had real energy on the pitch, but very little of it reached the internet.",
+         problem="Great matches, quiet channels. The league needed a reason for people to care on the days there was no football.",
+         built=["Took over Instagram, Facebook, TikTok, YouTube and X at once, plus live coverage of events.",
+                "Worked out what made Lagos Liga different from every other league, and kept saying it.",
+                "Put everyone in the spotlight: club owners, coaches, players, partners and vendors. When people feel seen, they share.",
+                "Treated the league as a content business that stays interesting between game days."],
+         metrics=[("+1,868%", "Impressions in one month"), ("+2,098%", "New followers"), ("5.1%", "Engagement rate, up 75%")],
+         metrics_note="It also trended on X organically, with no paid push.",
+         lesson="The fastest growth didn't come from better content alone. It came from making every person in the league feel important.",
          quote=("I knew you were good at your stuff, but I saw how that competence got matched with personality, character and street depth. I don't think I ever want to do any venture without going with you.", "JJ Omojuwa", "Convener, Lagos Liga"),
          video=None),
     dict(slug="techunwind-fest", tags="projects", kind="Projects",
-         title="Marketing and partnerships for TechUnwind Fest", short="TechUnwind Fest",
-         org="TechUnwind Fest · via FONO", role="Marketing & partnerships lead", year="2023 – 2024",
-         summary="Three editions of a lifestyle-meets-tech festival, filled through hybrid marketing and partnerships built as real activations.",
-         context="TechUnwind Fest gives Nigeria's tech community, from founders and creatives to investors and professionals, a relaxed space to connect and learn. FONO led marketing and partnership strategy across three editions.",
-         problem="Get the right people in the room, and turn attendance into real interest for the brands behind the event.",
-         built=["Designed a hybrid strategy: targeted digital campaigns plus volunteers reaching tech communities on the ground.",
-                "Secured and managed 18+ brand partnerships, each structured as a mutual activation rather than a logo placement.",
-                "Built content around three principles: educate, entertain, sell. Spaces, lives, radio, interviews and a talent hunt.",
-                "Chose influencers for proven conversion, not follower counts, and secured press features."],
-         metrics=[("40%", "Attendee-to-user conversion"), ("3,000+", "Attendees across 3 editions"), ("18+", "Brand partnerships")],
-         metrics_note="Audience: 45% mid-level professionals, 25% senior experts.",
+         title="Filling TechUnwind Fest, three times", short="TechUnwind Fest",
+         org="TechUnwind Fest · through FONO", role="Marketing & partnerships", year="2023 – 2024",
+         summary="Marketing and partnerships for three editions of a lifestyle-meets-tech festival, with partnerships built as real activations.",
+         context="TechUnwind Fest gives Nigeria's tech community, from founders and creatives to investors, a relaxed place to meet and learn. FONO led marketing and partnerships across three editions.",
+         problem="Get the right people in the room, and make the event worth it for the brands supporting it.",
+         built=["Ran digital campaigns alongside volunteers who reached tech communities in person.",
+                "Brought in and managed 18+ brand partnerships, each set up as a shared activation rather than a logo on a banner.",
+                "Built the content around three ideas: educate, entertain, sell. Spaces, lives, radio, street interviews and a talent hunt.",
+                "Chose influencers for their record of converting people, not their follower counts."],
+         metrics=[("40%", "Attendees who became users"), ("3,000+", "Attendees across 3 editions"), ("18+", "Brand partnerships")],
+         metrics_note="45% of the audience were mid-level professionals and 25% senior experts.",
          lesson="Event marketing works when it serves a business goal, from the first invite to the last follow-up.",
          quote=None, video="h-46PNFo1wQ"),
     dict(slug="national-msme-conference-2024", tags="projects", kind="Projects",
-         title="Strategic communications for the National MSME Conference", short="National MSME Conference",
-         org="National MSME Conference · via FONO", role="Strategic communications", year="2024",
-         summary="Integrated communications for one of Nigeria's biggest small-business gatherings, from first invite to post-event follow-up.",
-         context="The National MSME Conference is one of Nigeria's most significant gatherings for small and medium enterprise development. FONO handled strategic communications from pre-event awareness to live coverage and follow-up.",
-         problem="Fill a full-capacity event, drive online attendance, and keep every message personal at national scale.",
-         built=["Ran an integrated strategy across LinkedIn, X, Instagram, email and influencer coordination with business leaders.",
-                "Made email the engine: daily recaps and personalised reminder sequences to drive virtual attendance.",
-                "Managed live coverage, press, interviews and media releases with consistent messaging throughout."],
+         title="Communications for the National MSME Conference", short="National MSME Conference",
+         org="National MSME Conference · through FONO", role="Strategic communications", year="2024",
+         summary="Communications for one of Nigeria's biggest small-business gatherings, from the first invitation to the follow-up after.",
+         context="The National MSME Conference is one of Nigeria's most important gatherings for small and medium businesses. FONO handled the communications, from early awareness to live coverage and follow-up.",
+         problem="Fill a full-capacity venue, get people to show up online, and keep every message personal at national scale.",
+         built=["Ran one plan across LinkedIn, X, Instagram, email and business community voices.",
+                "Made email the engine: daily recaps and personal reminders that brought people back.",
+                "Handled live coverage, press, interviews and media releases with one consistent voice."],
          metrics=[("70%", "Email open rate, 3.2× industry"), ("16%", "Click-through rate"), ("8,000+", "Applications received")],
-         metrics_note="800 in-person attendees (full capacity) and 600+ online.",
-         lesson="A 70% open rate is a measure of trust. People open what they've learned to expect value from.",
+         metrics_note="800 people attended in person, at full capacity, and 600+ joined online.",
+         lesson="A 70% open rate is really a measure of trust. People open what they've learned to expect something useful from.",
          quote=None, video=None),
 ]
 
-# ---- FONO client projects (FONO Projects page), from FONO's case study database
 FONO_PROJECTS = [
     dict(name="DNI / DNI Pay", year="2023 – 2025", sector="Fintech", service="Business management & operations",
-         context="A new security startup that pivoted into DNI Pay, a digital payments platform for Africa. FONO was its operational and strategic backbone from day one.",
-         did="Team structure, OKRs and hiring; a 12-month market entry plan; launch event; pitch decks, HR and finance policies; and, at go-live, customer experience, KYC, finance tracking and five new partnerships.",
-         results="2,000+ active users within 21 days of launch · 95%+ KYC verified within 24 hours · 90% of issues resolved within 24 hours · FONO's longest engagement, 2+ years.",
-         insight="Building a business from scratch and running it after launch is the clearest proof of strategy-led execution."),
-    dict(name="Lagos Liga", year="2024 – 2025", sector="Sports & entertainment", service="Social media marketing",
-         context="One of Africa's largest private recreational football leagues. Real energy on the pitch, but little of it online.",
-         did="Took over five platforms at once with live event coverage, spotlighted every stakeholder in the league, and repositioned it as a content business that stays relevant between matches.",
-         results="Within one month: +1,868% impressions · +7,929% profile visits · +2,098% new followers · engagement up 75% to 5.1% · trending on X organically.",
+         context="A young security startup that pivoted into DNI Pay, a payments platform for Africa. FONO was its operating and strategy partner from the first month.",
+         did="Team structure, OKRs and hiring; a 12-month market entry plan; the launch event; pitch decks and policies; and, at go-live, support, KYC, finance tracking and five partnerships.",
+         results="2,000+ active users within 21 days of launch · 95%+ of KYC checks done within 24 hours · 90% of issues fixed within 24 hours · our longest engagement, 2+ years.",
+         insight="Building a business and then running it after launch is the clearest test of strategy."),
+    dict(name="Lagos Liga", year="2024 – 2025", sector="Sports & entertainment", service="Growth & communications",
+         context="One of Africa's largest recreational football leagues, with real energy on the pitch and very little online.",
+         did="Five platforms and live coverage at once, a spotlight on every stakeholder in the league, and a new position as a content business between matches.",
+         results="In one month: +1,868% impressions · +7,929% profile visits · +2,098% followers · engagement up 75% to 5.1% · trending on X without paid promotion.",
          insight="When people feel important, they amplify for free."),
-    dict(name="TechUnwind Fest", year="2023 – 2024", sector="Tech events & community", service="Marketing & partnerships",
-         context="A lifestyle-meets-tech festival for Nigeria's tech community. FONO led marketing and partnerships across three editions.",
-         did="Hybrid digital and on-the-ground campaigns, 18+ brand partnerships built as mutual activations, an educate–entertain–sell content framework, press and influencer collaborations.",
-         results="3,000+ attendees across 3 editions · 40% attendee-to-user conversion · 650,000+ impressions · 75,000+ social users engaged.",
-         insight="That alignment between event marketing and business goals takes strategy from the first invite to the last follow-up."),
+    dict(name="TechUnwind Fest", year="2023 – 2024", sector="Tech events & community", service="Growth & partnerships",
+         context="A lifestyle-meets-tech festival for Nigeria's tech community, across three editions.",
+         did="Digital and on-the-ground campaigns, 18+ partnerships set up as shared activations, an educate–entertain–sell content plan, press and creator collaborations.",
+         results="3,000+ attendees across three editions · 40% of attendees became users · 650,000+ impressions · 75,000+ people engaged on social.",
+         insight="Event marketing only works when it's tied to a business goal."),
     dict(name="National MSME Conference 2024", year="2024", sector="Government / SME development", service="Strategic communications",
-         context="One of Nigeria's most important gatherings for small business development.",
-         did="Integrated social, email and influencer communications; daily recaps and personalised reminders; live coverage, press and media management.",
-         results="8,000+ applications · 800 in-person attendees (full capacity) · 600+ online · 70% email open rate, 3.2× the industry average · 16% click-through.",
-         insight="A 70% open rate is proof of trust: the audience wanted to hear from us."),
-    dict(name="Kaduna State Government", year="2024", sector="Government / public sector", service="Influencer marketing & campaign management",
-         context="The state needed to share progress on healthcare and education infrastructure without it feeling like a political advert.",
-         did="Ran the influencer campaign end to end: a strict brief (no hashtags, no campaign language), six credible voices across X and Instagram, and a full analytics report.",
-         results="65,000+ total reach · all posts live within 48 hours of briefing · 100% tone compliance.",
-         insight="The most effective government communication doesn't look like government communication."),
-    dict(name="Petroleum Technology Development Fund (PTDF)", year="2024", sector="Federal government / STEM education", service="Business writing & production",
-         context="PTDF needed a STEM video that made complex science simple and inspiring for young Nigerians, without losing accuracy.",
-         did="Led the proposal and won the project, then managed scripting, crew, shoot-day supervision and stakeholder coordination through to delivery of the film.",
-         results="Delivered “Empowering the Future: PTDF STEM in Action” on a tight timeline, with positive feedback from all stakeholders.",
-         insight="Federal projects demand precision: many stakeholders, institutional sensitivities and zero tolerance for misalignment."),
-    dict(name="TOS Group: Reserved Seats Bill for Women", year="2025", sector="Civic advocacy", service="PR & campaign management",
-         context="A campaign to spark public conversation about guaranteeing women's representation in Nigeria's legislature.",
-         did="A 10-day campaign across four platforms with daily content, real-time engagement, 10+ creators, new Facebook and TikTok pages built from scratch, and content in English, Yoruba and Igbo.",
-         results="145,000+ views in 10 days · 12,200 TikTok views on a brand-new page · 10+ creator collaborations · 3 languages.",
-         insight="Treat every day of a campaign as its own mini-launch."),
-    dict(name="IMAGIO", year="2025", sector="Home furnishings & lifestyle", service="Marketing",
-         context="An Abuja home furnishings and lifestyle brand. FONO ran marketing across Instagram and TikTok for two quarters.",
-         did="Social media management, influencer campaigns for a discount week and a product launch, weekly content, quarterly reporting and an email/CRM strategy.",
-         results="Q2: 608,000+ Instagram views and 244,000+ combined reach · Q3 documented honestly, with a clear diagnosis of what changed.",
-         insight="Honest reporting that names causes, not just outcomes, is what lets a strategy improve."),
-    dict(name="Study Abroad Manuel (SAM)", year="2024", sector="Education / study abroad", service="Marketing",
+         context="One of Nigeria's most important gatherings for small business.",
+         did="One communications plan across social, email and community voices; daily recaps and personal reminders; live coverage, press and media.",
+         results="8,000+ applications · 800 in person at full capacity · 600+ online · 70% email open rate, 3.2× the industry average · 16% click-through.",
+         insight="A high open rate is proof of trust. The audience wanted to hear from us."),
+    dict(name="Kaduna State Government", year="2024", sector="Government / public sector", service="Public communications",
+         context="The state wanted to share real progress in healthcare and education without it sounding like a political advert.",
+         did="A strict brief (no hashtags, no campaign language), six credible voices across X and Instagram, and a full report at the end.",
+         results="65,000+ people reached · every post live within 48 hours of the brief · 100% of posts on tone.",
+         insight="The best government communication doesn't look like government communication."),
+    dict(name="Petroleum Technology Development Fund (PTDF)", year="2024", sector="Federal government / STEM education", service="Project leadership & production",
+         context="PTDF needed a STEM film that made complex science feel simple and exciting for young Nigerians, without losing accuracy.",
+         did="Led the proposal that won the project, then managed the script, crew, shoot and every stakeholder through to delivery.",
+         results="Delivered “Empowering the Future: PTDF STEM in Action” on a tight timeline, with warm feedback from every stakeholder.",
+         insight="Federal projects need precision: many stakeholders, real sensitivities, no room for misalignment."),
+    dict(name="TOS Group: Reserved Seats Bill for Women", year="2025", sector="Civic advocacy", service="Public affairs & campaigns",
+         context="A campaign to get people talking about guaranteed seats for women in Nigeria's legislature.",
+         did="Ten days across four platforms: daily content, live engagement, 10+ creators, two new pages built from scratch, and content in English, Yoruba and Igbo.",
+         results="145,000+ views in 10 days · 12,200 TikTok views on a brand-new page · 10+ creators · 3 languages.",
+         insight="Treat every day of a campaign as its own small launch."),
+    dict(name="IMAGIO", year="2025", sector="Home & lifestyle", service="Growth advisory",
+         context="An Abuja home furnishings brand. FONO looked after its growth on Instagram and TikTok for two quarters.",
+         did="Social media, influencer campaigns for a sale and a product launch, weekly content, quarterly reports and an email plan.",
+         results="Q2: 608,000+ Instagram views and 244,000+ people reached · Q3 reported honestly, with a clear reason for the dip.",
+         insight="Honest reports that name the cause, not just the number, are what let a strategy get better."),
+    dict(name="Study Abroad Manuel (SAM)", year="2024", sector="Education", service="Growth advisory",
          context="A Nigerian consultancy helping students apply to universities abroad.",
-         did="100+ posts, live events, paid ads, influencers and monthly explainer videos; a lead-generation tuition campaign and a #StudyAbroadChallenge; a new student-network partnership and webinar.",
-         results="36,000+ accounts reached in one month · 43,500+ views on the challenge campaign · audiences across Nigeria, Ghana, the UK, Tanzania and the US.",
-         insight="Speaking to many countries at once takes content that is local and global at the same time."),
-    dict(name="Mide Lawal & Co.", year="2025", sector="Personal brand / coaching", service="Branding & go-to-market",
-         context="A business operations and customer experience coach who needed a personal brand and a launch.",
-         did="Positioned her as a 'Business Midwife', built content across three platforms, and pivoted mid-sprint to launch her flagship masterclass with a webinar funnel and conversion ads.",
-         results="+684% month-on-month impressions on X · 67 webinar attendees · 33 masterclass sign-ups while the campaign was still running.",
-         insight="The best strategy is one you can adapt without losing clarity."),
-    dict(name="Earna", year="2024", sector="Fintech & insurance", service="Marketing",
-         context="A fintech and insurance platform offering health, group, senior and retirement plans.",
-         did="Multi-platform social media, explainer videos, a cross-platform campaign, plan relaunches, a retirement plan launch, a webinar and partnership materials.",
-         results="The flagship campaign was the top content on every platform · 31.5% of interactions came from paid · strong diaspora reach in the UK.",
-         insight="In financial products, trust is the currency: educate first, sell second."),
-    dict(name="Grey Cleaning Solutions", year="2025", sector="Cleaning / home services", service="Branding & market launch",
-         context="An existing business without a clear identity or digital foundation. The mandate: build the brand and launch it properly.",
-         did="Brand audit, a full brand book (identity, voice, messaging), marketing strategy and rebuilt Instagram and TikTok, ending in a full relaunch.",
-         results="+2,784% Instagram reach after relaunch · +609% TikTok viewers within a week · audit to relaunch in under 2 months.",
-         insight="Give a brand something worth discovering and the algorithm works for you."),
-    dict(name="HC Studios", year="2025", sector="Photography / creative services", service="Branding & communication",
-         context="An Abuja photographer with a strong body of work and a brand that didn't yet match its emotional depth.",
-         did="Defined a voice built on peace, warmth and quiet confidence; a messaging and storytelling strategy; and a content system built around the client journey.",
-         results="A cohesive identity, a consistent voice across platforms, and a content system the founder actually uses.",
+         did="100+ posts, live events, ads, influencers and monthly explainer videos; a tuition campaign and a #StudyAbroadChallenge; a new student partnership and webinar.",
+         results="36,000+ accounts reached in a month · 43,500+ views on the challenge · audiences in Nigeria, Ghana, the UK, Tanzania and the US.",
+         insight="Speaking to five countries at once needs content that is local and global at the same time."),
+    dict(name="Mide Lawal & Co.", year="2025", sector="Personal brand / coaching", service="Brand & go-to-market",
+         context="A business operations coach who needed a clear brand and a launch.",
+         did="Positioned her as a 'Business Midwife', built her content on three platforms, then changed course mid-sprint to launch her masterclass with a webinar funnel.",
+         results="+684% month-on-month impressions on X · 67 webinar attendees · 33 masterclass sign-ups with the campaign still running.",
+         insight="The best plan is one you're willing to change."),
+    dict(name="Earna", year="2024", sector="Fintech & insurance", service="Growth advisory",
+         context="A fintech and insurance platform for health, group, senior and retirement plans.",
+         did="Content across five platforms, explainer videos, a flagship campaign, two plan relaunches, a retirement launch and a webinar.",
+         results="The flagship campaign was the top content on every platform · strong diaspora reach in the UK.",
+         insight="With money, trust comes first. Educate, then sell."),
+    dict(name="Grey Cleaning Solutions", year="2025", sector="Home services", service="Brand & market launch",
+         context="A working business without a clear identity. The brief: build the brand and launch it properly.",
+         did="A brand audit, a full brand book, a marketing plan and rebuilt Instagram and TikTok, ending in a relaunch.",
+         results="+2,784% Instagram reach after relaunch · +609% TikTok viewers within a week · audit to relaunch in under two months.",
+         insight="Give people something worth discovering and the algorithm does the rest."),
+    dict(name="HC Studios", year="2025", sector="Photography", service="Brand & communication",
+         context="An Abuja photographer whose brand didn't yet match the feeling in his work.",
+         did="A voice built on peace, warmth and quiet confidence, a storytelling plan, and a content system shaped around the client's journey.",
+         results="One clear identity across platforms, and a content system the founder actually uses.",
          insight="The brief was never 'make it look nice'. It was 'make it feel like something'."),
-    dict(name="Dee Dorhcas", year="2024 – 2025", sector="Fashion & lifestyle", service="Branding & marketing",
-         context="A fashion brand with a following but no visual consistency or clear identity.",
-         did="A page audit, a rebuilt visual identity and digital presence, a public relaunch and influencer partnerships.",
-         results="First two weeks: 76.5% of top-post views from non-followers · 63% non-follower views overall · 83% of interactions from loyal followers.",
-         insight="A brand loved by its followers and discovered by new people is built to grow without paid dependency."),
-    dict(name="HyTaste", year="2023", sector="Food & hospitality", service="Marketing",
-         context="A healthy fast food restaurant and salad bar in Wuse II, Abuja, preparing a grand opening after expanding.",
-         did="A full pre- and post-opening plan: flyers, roadshow and local partnerships; an Instagram campaign, influencers and a hashtag challenge; a tasting event; and email and SMS retention.",
-         results="One launch plan with traditional, digital, experiential and retention channels working together from day one.",
-         insight="A grand opening is a brand's first impression at scale. It deserves a proper strategy."),
-    dict(name="ASIKA", year="2024", sector="Fashion", service="Branding",
-         context="A women's clothing brand blending style and quality for the modern wardrobe.",
-         did="Brand identity: logo and mock-ups that speak to confidence and self-expression.", results="", insight=""),
-    dict(name="The Stylish Room", year="2024", sector="Interior decoration", service="Branding",
-         context="A boutique interior decoration company that turns living spaces into personal sanctuaries.",
-         did="Brand identity: logo and mock-ups across contemporary, minimalist and bohemian styles.", results="", insight=""),
-    dict(name="QiQi", year="2025", sector="Home care", service="Branding",
-         context="A premium eco-friendly detergent brand designed to care for multicoloured fabrics.",
-         did="Brand identity: logo and packaging mock-ups for the conscious Nigerian household.", results="", insight=""),
+    dict(name="Dee Dorhcas", year="2024 – 2025", sector="Fashion", service="Brand & growth",
+         context="A fashion brand with a following, but no consistency or clear identity.",
+         did="An audit, a new visual identity, a public relaunch and creator partnerships.",
+         results="In two weeks: 76.5% of top-post views from new people · 63% non-follower views overall.",
+         insight="A brand loved by its followers and found by strangers is built to grow."),
+    dict(name="HyTaste", year="2023", sector="Food & hospitality", service="Launch strategy",
+         context="A healthy fast food restaurant in Wuse II, Abuja, opening after an expansion.",
+         did="A full opening plan: flyers, a roadshow and local partnerships; an Instagram campaign and influencers; a tasting event; email and SMS to bring people back.",
+         results="One plan with traditional, digital, in-person and retention channels working together from day one.",
+         insight="A grand opening is a first impression at scale."),
+    dict(name="ASIKA", year="2024", sector="Fashion", service="Brand identity",
+         context="A women's clothing brand blending style and quality.", did="Logo and brand mock-ups built around confidence and self-expression.", results="", insight=""),
+    dict(name="The Stylish Room", year="2024", sector="Interior decoration", service="Brand identity",
+         context="A boutique interior decoration company.", did="Logo and brand mock-ups across its range of styles.", results="", insight=""),
+    dict(name="QiQi", year="2025", sector="Home care", service="Brand identity",
+         context="An eco-friendly detergent brand for colourful fabrics.", did="Logo and packaging mock-ups.", results="", insight=""),
 ]
 
 TESTIMONIALS = [
-    ("I knew you were good at your stuff, but I saw how that competence got matched with personality, character and street depth. You couldn't have impressed me more. I don't think I ever want to do any venture without going with you.", "JJ Omojuwa", "Convener, Lagos Liga"),
-    ("Working with Favour Ogazi was honestly one of the best decisions I made for my personal brand. She doesn't just know what to do, she gets it done swiftly and with so much precision.", "Itunu Olatunde", "Fashion, beauty and lifestyle creator"),
-    ("Favour, I have worked with many people for 2 years, but these few months with you were one of the best times I've had with a staff. You are very intelligent, and I love how you connect all things.", "Nkem Ukwa", "Lead Consultant, Gatewood Consulting"),
-    ("It's been an absolute pleasure working with you. Thank you for anticipating my needs even before I knew what I wanted. It's inspiring to see your determination and hunger for excellence.", "Kayode Akinwunmi", "CEO, CSL Pay"),
-    ("Thank you for putting in extra effort to ensure everything goes well for DNI. Thank you for making our lives easier. I do not take anything you do for granted; I mean it.", "Olayinka Olaoye", "Co-founder & CEO, DNI Pay"),
-    ("Favour, I wanted to say you were a great addition to the team. Good luck in all your future endeavors, and let me know whenever you need me or the team.", "Boluwatife Omotayo", "Co-founder & CEO, gamp technology"),
+    ("I knew you were good at your stuff, but I saw how that competence got matched with personality, character and street depth. You couldn't have impressed me more.", "JJ Omojuwa", "Convener, Lagos Liga"),
+    ("Working with Favour was honestly one of the best decisions I made for my personal brand. She doesn't just know what to do, she gets it done swiftly and with so much precision.", "Itunu Olatunde", "Fashion, beauty and lifestyle creator"),
+    ("I have worked with many people for two years, but these few months with you were one of the best times I've had with a staff. You are very intelligent, and I love how you connect all things.", "Nkem Ukwa", "Lead Consultant, Gatewood Consulting"),
+    ("Thank you for anticipating my needs even before I knew what I wanted. It's inspiring to see your determination and hunger for excellence.", "Kayode Akinwunmi", "CEO, CSL Pay"),
+    ("Thank you for putting in extra effort to ensure everything goes well for DNI. Thank you for making our lives easier.", "Olayinka Olaoye", "Co-founder & CEO, DNI Pay"),
+    ("You were a great addition to the team. Let me know whenever you need me or the team.", "Boluwatife Omotayo", "Co-founder & CEO, gamp technology"),
 ]
 
-# ---- Writing. cats: psychology, relationships, productivity, faith, womanhood
 ESSAYS = [
-    ("What Do You Have In Your Hands?", "Jun 2026", "Medium", "productivity psychology", "Productivity", "Build from what you already have, before chasing what you lack.", "https://medium.com/@thefavourogazi/what-do-you-have-in-your-hands-84d61900e5d2"),
-    ("Have Hobbies That Do Not Scale.", "Jan 2026", "Medium", "productivity psychology", "Productivity", "A case for private joys that can't be measured, monetised or posted.", "https://medium.com/@thefavourogazi/have-hobbies-that-do-not-scale-c2be5e06cc0a"),
-    ("Slow Death.", "Nov 2025", "Medium", "psychology relationships", "Psychology", "How we quietly lose ourselves, and how choosing yourself turns it around.", "https://medium.com/@thefavourogazi/slow-death-34ce5e1d343a"),
-    ("You Want More Than I Can Give.", "Oct 2025", "Medium", "relationships", "Relationships", "On the weight of friendship, and giving your fullest self to a few.", "https://medium.com/@thefavourogazi/you-want-more-than-i-can-give-ccfd6936a4b8"),
-    ("You Are Running Away Again.", "Jul 2025", "Medium", "psychology", "Psychology", "When retreat feels like rest, and the courage it takes to come back.", "https://medium.com/@thefavourogazi/you-are-running-away-again-18275b6b5e1c"),
-    ("They Don't Tell You How It Feels To Be A Christian Girl In Nigeria.", "May 2025", "Substack", "faith womanhood", "Faith", "An honest look at faith, setbacks and grace as a young woman.", "https://favoursnewsletter.substack.com/p/they-dont-tell-you-how-it-feels-to"),
-    ("Bad Girls Of The Bible.", "Apr 2025", "Substack", "faith womanhood", "Faith", "Ten flawed women of scripture, and what their stories say about grace.", "https://favoursnewsletter.substack.com/p/bad-girls-of-the-bible"),
-    ("They Say Your Twenties Are The Most Important Years Of Your Life.", "Mar 2025", "Medium", "psychology productivity", "Psychology", "All the contradictory advice about your twenties, and how tiring it is.", "https://medium.com/@thefavourogazi/my-dear-i-am-trying-109839ba8daf"),
-    ("Short Skirt.", "Jan 2025", "Medium", "womanhood psychology", "Womanhood", "A party-game nickname, and how the labels we choose shape how we're seen.", "https://medium.com/@thefavourogazi/short-skirt-3a386754d9fb"),
+    ("What Do You Have In Your Hands?", "Jun 2026", "Medium", "productivity psychology", "Productivity", "On starting with what you already have, instead of waiting for what you don't.", "https://medium.com/@thefavourogazi/what-do-you-have-in-your-hands-84d61900e5d2"),
+    ("Have Hobbies That Do Not Scale.", "Jan 2026", "Medium", "productivity psychology", "Productivity", "A case for small joys you never measure, sell or post.", "https://medium.com/@thefavourogazi/have-hobbies-that-do-not-scale-c2be5e06cc0a"),
+    ("Slow Death.", "Nov 2025", "Medium", "psychology relationships", "Psychology", "How we lose ourselves a little at a time, and how we come back.", "https://medium.com/@thefavourogazi/slow-death-34ce5e1d343a"),
+    ("You Want More Than I Can Give.", "Oct 2025", "Medium", "relationships", "Relationships", "On friendship, limits, and giving your whole self to a few people.", "https://medium.com/@thefavourogazi/you-want-more-than-i-can-give-ccfd6936a4b8"),
+    ("You Are Running Away Again.", "Jul 2025", "Medium", "psychology", "Psychology", "When hiding feels like rest, and what it takes to come back.", "https://medium.com/@thefavourogazi/you-are-running-away-again-18275b6b5e1c"),
+    ("They Don't Tell You How It Feels To Be A Christian Girl In Nigeria.", "May 2025", "Substack", "faith womanhood", "Faith", "Faith, setbacks and grace, honestly.", "https://favoursnewsletter.substack.com/p/they-dont-tell-you-how-it-feels-to"),
+    ("Bad Girls Of The Bible.", "Apr 2025", "Substack", "faith womanhood", "Faith", "Ten imperfect women of scripture, and what they teach about grace.", "https://favoursnewsletter.substack.com/p/bad-girls-of-the-bible"),
+    ("They Say Your Twenties Are The Most Important Years Of Your Life.", "Mar 2025", "Medium", "psychology productivity", "Psychology", "All the conflicting advice about your twenties, and how tiring it gets.", "https://medium.com/@thefavourogazi/my-dear-i-am-trying-109839ba8daf"),
+    ("Short Skirt.", "Jan 2025", "Medium", "womanhood psychology", "Womanhood", "A nickname from a party game, and how labels shape how we're seen.", "https://medium.com/@thefavourogazi/short-skirt-3a386754d9fb"),
 ]
 
-# ---- Short-form ideas from X: screenshots in public/assets/img/x-1.png ... (from her most-liked posts)
 TWEETS = [
     ("x-1.png", "https://x.com/Favour_Ogazi/status/2089991110009516113", "I think one of my favourite things about life is still meeting someone and immediately knowing: oh, you are going to matter."),
     ("x-2.png", "https://x.com/Favour_Ogazi/status/2096610437399773338", "Money buys a lot of extremely underrated things. Convenience. Time. Options. Privacy. Distance from nonsense."),
     ("x-3.png", "https://x.com/Favour_Ogazi/status/2092571639879708870", "Some opportunities arrive because you are talented. Others arrive because someone remembered you were reliable."),
-    ("x-4.png", "https://x.com/Favour_Ogazi/status/2103749188030730630", "Good friendships make ordinary life feel important. A random Wednesday, one phone call, a stupid joke, dinner somewhere. That is a life too."),
-    ("x-5.png", "https://x.com/Favour_Ogazi/status/2100671115118997524", "At some point, you have to let yourself be witnessed - in the work, in the mistakes, in the becoming."),
+    ("x-4.png", "https://x.com/Favour_Ogazi/status/2103749188030730630", "Good friendships make ordinary life feel important."),
+    ("x-5.png", "https://x.com/Favour_Ogazi/status/2100671115118997524", "At some point, you have to let yourself be witnessed."),
 ]
 
 TOPICS = [
-    ("Business operations", "Turning strategy into systems, structure and execution."),
-    ("Leadership and ownership", "Building accountable teams and thinking like a business partner."),
-    ("Entrepreneurship", "Helping founders build businesses that can grow beyond them."),
-    ("Fintech operations", "Cross-border payments, treasury workflows and trade desk execution."),
-    ("AI for business", "Practical ways to improve workflows and everyday operations."),
-    ("Career growth", "Navigating career transitions and building career capital."),
-    ("Writing and storytelling", "Finding your voice and communicating ideas with clarity."),
+    ("Business operations", "How strategy becomes structure, routines and work that actually ships."),
+    ("Leadership and ownership", "Building teams that own outcomes, and thinking like a partner in the business."),
+    ("Entrepreneurship", "Helping founders build companies that can grow beyond them."),
+    ("Fintech operations", "What it really takes to run cross-border payments and treasury day to day."),
+    ("AI at work", "Practical, unglamorous ways AI gives teams their time back."),
+    ("Career growth", "Changing direction, building career capital, and the courage in between."),
+    ("Writing and storytelling", "Finding your voice and saying what you mean, clearly."),
 ]
 
-SERVICES = [
-    ("Business & pricing systems", "Pricing, unit economics and the systems that make a business run on purpose."),
-    ("Operations advisory", "Processes, structure and operating rhythm that free founders from the day-to-day."),
-    ("AI implementation", "Practical automation that saves your team time, without the hype."),
-    ("Growth strategy", "Clear priorities, go-to-market plans and campaigns that move you from idea to execution."),
-    ("Leadership", "Helping leaders build accountable teams and lead with clarity."),
+FONO_AREAS = [
+    ("Strategy & operations", "How the business really runs: structure, processes, decision rights and the weekly rhythm that keeps a team honest."),
+    ("Pricing & business models", "What you charge, why, and whether the numbers actually work as you grow."),
+    ("Growth & go-to-market", "Who you're for, how they find you, and the campaigns and partnerships that bring them in."),
+    ("AI & automation", "Where automation saves real time in your operations, and where it would just add noise."),
+    ("Leadership & team design", "Who does what, how people are hired and developed, and how a founder steps back without things falling apart."),
+]
+
+FONO_MODES = [
+    ("Diagnostic", "A focused look at where the business is stuck. You get an honest written assessment and a clear plan you can act on."),
+    ("Advisory retainer", "Ongoing counsel for founders and leadership teams: regular working sessions, a thinking partner for big decisions, and accountability."),
+    ("Embedded delivery", "When a plan needs carrying through, we join for a defined project and run it alongside your team until it holds."),
 ]
 
 PRINCIPLES = [
-    ("Documentation", "If it isn't written down, it didn't happen. I capture what was done, why, and what came of it, so work outlives the moment."),
-    ("Communication", "Strategy only becomes reality when the people carrying it understand it. Clear, early and often."),
-    ("AI-forward thinking", "Using automation and AI to simplify operations and give people more time for meaningful work."),
+    ("I write things down.", "Work you can't explain is work that can't be repeated. I document what was done, why, and what happened, so the next person doesn't start from zero."),
+    ("I talk early and often.", "Most problems I've fixed were communication problems first. Plans only work when the people carrying them understand them."),
+    ("I let tools do the boring parts.", "Automation and AI should give people their time back for the work that needs judgement."),
 ]
 
-EXPERIENCE = [
-    ("Dec 2025 – now", "Operations Lead", "Mighty"),
-    ("2023 – now", "Founder", "FONO Consulting"),
-    ("2023 – 2025", "Head of Business Management & Operations", "DNI / DNI Pay"),
-    ("2024", "Marketing Communications Specialist", "gamp"),
-    ("2022 – 2023", "Co-founder", "Krieit Kulture"),
-    ("2022 – 2023", "Business Analyst", "Gatewood Consulting"),
-    ("2021", "Operations Manager", "EastPro Logistics"),
-]
-
-NOW = [("Building", "Treasury and cross-border payment operations."), ("Growing", "FONO's advisory work."),
+NOW = [("At work", "Building treasury and cross-border payment operations at Mighty."), ("At FONO", "Taking on a small number of new advisory clients."),
        ("Writing", "My first anthology."), ("Learning", "Operations, AI and automation.")]
 
 # ======================================================================= TEMPLATE
 e = html.escape
 NAV = [("Work", "work.html"), ("FONO", "fono.html"), ("Writing", "writing.html"), ("Speaking", "speaking.html"), ("About", "about.html")]
 AC = ' aria-current="page"'
-NJ = ' class="no-js-hide"'
-LOGO = ('<svg viewBox="0 0 40 40" aria-hidden="true" fill="currentColor">'
-        '<rect x="3" y="8" width="4.2" height="24"/><rect x="3" y="8" width="14" height="4.2"/><rect x="3" y="18.2" width="10.5" height="3.8"/>'
-        '<circle cx="28.5" cy="20" r="8.6" fill="none" stroke="currentColor" stroke-width="4"/></svg>')
 
 def head(title, desc):
     t = "Favour Ogazi" if title == "Home" else title + " · Favour Ogazi"
@@ -288,11 +300,11 @@ def head(title, desc):
 <meta property="og:description" content="{d}">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/img/portrait.jpg">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#FAF9F6">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Instrument+Serif:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -300,17 +312,15 @@ def head(title, desc):
 
 def nav(active):
     items = "".join('<li><a href="{h}"{c}>{l}</a></li>'.format(h=h, l=l, c=AC if l == active else "") for l, h in NAV)
-    home_cls = " logo-home" if active == "Home" else ""
-    return """<div class="progress" aria-hidden="true"></div>
-<header class="nav">
+    return """<header class="nav">
   <div class="wrap">
-    <a class="logo{hc}" href="index.html" aria-label="Favour Ogazi, home">{logo}<span class="name">Favour Ogazi</span></a>
+    <a class="wordmark" href="index.html">Favour Ogazi</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
     <ul class="nav-links" id="nav-links">{items}<li><a class="nav-cta" href="contact.html"{cc}>Work with me</a></li></ul>
   </div>
 </header>
 <main id="top">
-""".format(hc=home_cls, logo=LOGO, items=items, cc=AC if active == "Contact" else "")
+""".format(items=items, cc=AC if active == "Contact" else "")
 
 def footer():
     soc = "".join('<li><a href="{u}" target="_blank" rel="noopener">{n}</a></li>'.format(n=n, u=u) for n, u in LINKS.items())
@@ -319,432 +329,448 @@ def footer():
 <footer class="footer dark">
   <div class="wrap">
     <div class="footer-top">
-      <a href="contact.html" class="footer-big">Let's build<br><em>something.</em></a>
+      <a href="contact.html" class="footer-big">Let's build <em>something.</em></a>
       <div class="footer-cols">
-        <div><p class="label muted" style="margin-bottom:14px">Pages</p><ul>{pages}<li><a href="fono-projects.html">FONO projects</a></li><li><a href="contact.html">Work with me</a></li></ul></div>
-        <div><p class="label muted" style="margin-bottom:14px">Elsewhere</p><ul>{soc}</ul></div>
-        <div><p class="label muted" style="margin-bottom:14px">Stay close</p><ul><li><a href="{wl}" target="_blank" rel="noopener">Join the newsletter</a></li><li><a href="mailto:{em}">{em}</a></li></ul></div>
+        <div><p class="label" style="margin-bottom:12px">Pages</p><ul>{pages}<li><a href="fono-projects.html">FONO engagements</a></li><li><a href="contact.html">Work with me</a></li></ul></div>
+        <div><p class="label" style="margin-bottom:12px">Elsewhere</p><ul>{soc}</ul></div>
+        <div><p class="label" style="margin-bottom:12px">Stay in touch</p><ul><li><a href="{wl}" target="_blank" rel="noopener">The newsletter</a></li><li><a href="mailto:{em}">Email me</a></li></ul></div>
       </div>
     </div>
-    <div class="footer-bottom"><span class="logo" style="color:var(--paper)">{logo}</span><span>© <span id="yr">2026</span> Favour Ogazi</span></div>
+    <div class="footer-bottom"><span>Favour Ogazi · Abuja, Nigeria</span><span>© <span id="yr">2026</span></span></div>
   </div>
 </footer>
 <script src="assets/site.js"></script>
 </body>
 </html>
-""".format(pages=pages, soc=soc, wl=WAITLIST_URL, em=EMAIL, logo=LOGO)
-
-def photo(src, label, cls="", show_label=True):
-    lab = e(label) if show_label else ""
-    return '<figure class="photo {c}" data-label="{lab}"><img src="{s}" alt="{a}" loading="lazy"></figure>'.format(c=cls, lab=lab, s=src, a=e(label))
+""".format(pages=pages, soc=soc, wl=WAITLIST_URL, em=EMAIL)
 
 def page(name, title, desc, body, active):
     (OUT / name).write_text(head(title, desc) + nav(active) + body + footer(), encoding="utf-8")
 
-def quote_cards(items):
-    return "".join('<figure class="quote-card rv"><blockquote><p>“{q}”</p></blockquote><figcaption><b>{n}</b><cite>{r}</cite></figcaption></figure>'.format(q=e(q), n=e(n), r=e(r)) for q, n, r in items)
+def img(src, alt, cls="", eager=False):
+    return '<img class="{c}" src="{s}" alt="{a}"{l}>'.format(c=cls, s=src, a=e(alt), l="" if eager else ' loading="lazy"')
+
+def quotes(items):
+    return "".join('<figure class="quote"><blockquote><p>“{q}”</p></blockquote><figcaption><cite><b>{n}</b>{r}</cite></figcaption></figure>'.format(q=e(q), n=e(n), r=e(r)) for q, n, r in items)
+
+def xp_list():
+    return "".join('<li><span class="when">{w}</span><div><h3>{r} <span>· {o}</span></h3><p>{d}</p></div></li>'.format(w=e(w), r=e(r), o=e(o), d=e(d)) for w, r, o, d in EXPERIENCE)
+
+def case_img(c):
+    if c["video"]:
+        return img("https://img.youtube.com/vi/%s/maxresdefault.jpg" % c["video"], c["short"])
+    p = OUT / "assets" / "img" / ("work-%s.jpg" % c["slug"])
+    if p.exists():
+        return img("assets/img/work-%s.jpg" % c["slug"], c["short"])
+    return ""
 
 # ======================================================================= PAGES
 def home():
-    pr = "".join('<div{c}><h3>{t}</h3><p>{d}</p></div>'.format(c=NJ if i else "", t=e(t), d=e(d)) for i, (t, d) in enumerate(PRINCIPLES))
+    record = "".join("<div><b>%s</b><span>%s</span></div>" % (e(n), e(t)) for n, t in RECORD)
+    names = "".join("<span>%s</span>" % e(n) for n in WORKED_WITH)
+    roles = [("Operations", "I run the operating side of a fintech that moves money across borders.", "work.html", "See the work"),
+             ("Advisory", "Through FONO, I help founders get their business working as well as their idea does.", "fono.html", "About FONO"),
+             ("Writing", "Unconventional ideas about people, work, love and faith, read by thousands.", "writing.html", "Read my ideas"),
+             ("Speaking", "Talks, panels and classes on operations, leadership, careers and storytelling.", "speaking.html", "Speaking & teaching")]
+    cards = "".join('<a href="%s"><p class="label">%02d</p><p class="h3">%s</p><p>%s</p><span class="go">%s →</span></a>' % (h, i, e(t), e(d), e(c)) for i, (t, d, h, c) in enumerate(roles, 1))
+    pr = "".join('<div><p class="h3">%s</p><p>%s</p></div>' % (e(t), e(d)) for t, d in PRINCIPLES)
     body = """
-<section class="hero dark" aria-label="Introduction">
+<section class="hero">
   <div class="wrap">
-    <div>
-      <h1 class="rv">Favour<span>Ogazi</span></h1>
-      <p class="tagline rv">Operations Leader · Founder · Writer</p>
+    <div class="hero-text">
+      <p class="label">Operations Leader · Founder · Writer</p>
+      <h1>I'm the person founders call when the idea is working and the business hasn't caught up yet.</h1>
+      <p class="lead">I'm Favour. I run operations at a cross-border payments company, advise founders through my firm FONO, and write about the human side of ambition. My work is the unglamorous middle: the structure, routines and people that let a good idea become a business that lasts.</p>
+      <div class="btns"><a class="btn" href="work.html">See my work</a><a class="btn ghost" href="contact.html">Work with me</a></div>
     </div>
-    <div class="hero-side">
-      {portrait}
-      <p class="lead rv">I bring clarity to complex problems, build systems that work, and turn strategy into measurable results.</p>
-      <span class="scroll-cue">Scroll</span>
-    </div>
+    {portrait}
   </div>
 </section>
 
-<section class="scrolly light" style="height:220vh" aria-label="What I do">
-  <div class="stage"><div class="wrap">
-    <p class="reveal-text" data-words>I take ideas, businesses, teams and messy situations, and make them <em>work&nbsp;better.</em></p>
-  </div></div>
+<section class="section tight white">
+  <div class="wrap">
+    <p class="statement">I take ideas, businesses, teams and messy situations, and make them <em>work better.</em></p>
+  </div>
 </section>
 
-<section class="scrolly dark sides-wrap" style="height:440vh" aria-label="One operator, several sides">
-  <div class="stage"><div class="wrap">
-    <div class="sides">
-      <ul class="side-list"><li>Operator</li><li>Advisor</li><li>Writer</li><li>Speaker</li></ul>
-      <div class="side-panels">
-        <div><h3 class="h-md">Operator</h3><p>I lead operations for a cross-border payments and treasury business: trade desk execution, client onboarding, and the operating rhythm that keeps teams accountable.</p><a class="link-arrow" href="work.html">See the work</a></div>
-        <div class="no-js-hide"><h3 class="h-md">Advisor</h3><p>Through FONO, I help founders fix pricing, build operating systems, implement AI and plan for growth.</p><a class="link-arrow" href="fono.html">About FONO</a></div>
-        <div class="no-js-hide"><h3 class="h-md">Writer</h3><p>I write uncommon ideas on psychology, relationships, productivity and faith: ideas that help people think differently and grow.</p><a class="link-arrow" href="writing.html">Read ideas from Favour</a></div>
-        <div class="no-js-hide"><h3 class="h-md">Speaker &amp; teacher</h3><p>Talks, panels and classes on operations, leadership, careers, content and storytelling.</p><a class="link-arrow" href="speaking.html">Speaking &amp; teaching</a></div>
-        <div class="no-js-hide"><h3 class="h-md">Not four people. One builder.</h3><p>Running operations, advising businesses, writing to make sense of it, and teaching what I learn.</p><a class="link-arrow" href="about.html">About me</a></div>
-      </div>
-    </div>
-  </div></div>
+<section class="section dark" id="record">
+  <div class="wrap">
+    <div class="head"><p class="label">The record</p><h2>Some of what that has looked like.</h2></div>
+    <div class="record">{record}</div>
+  </div>
 </section>
 
-<section class="scrolly white pr-section" style="height:320vh" aria-label="How I work">
-  <div class="stage"><div class="wrap">
-    <p class="label muted" style="margin-bottom:26px">Three things shape how I work</p>
-    <div class="pr-wrap">
-      <div class="pr-num">1</div>
-      <div><div class="pr-items">{pr}</div><div class="dots"><i class="on"></i><i></i><i></i></div></div>
-    </div>
-  </div></div>
+<section class="section tight">
+  <div class="wrap">
+    <div class="head"><p class="label">Companies, clients and institutions</p></div>
+    <p class="names">{names}</p>
+  </div>
 </section>
-""".format(portrait=photo("assets/img/portrait.jpg", "Favour Ogazi"), pr=pr)
-    page("index.html", "Home", "Favour Ogazi is an operations leader, founder and writer who brings clarity to complex problems, builds systems that work, and turns strategy into measurable results.", body, "Home")
+
+<section class="section white" id="what-i-do">
+  <div class="wrap">
+    <div class="head"><p class="label">What I do</p><h2>One person, four ways of doing the same job.</h2><p class="lead">Running a business, advising one, writing about the people in it, and teaching what I learn. Pick where you'd like to start.</p></div>
+    <div class="cards">{cards}</div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="wrap two">
+    <div class="head" style="margin:0"><p class="label">Experience</p><h2>Where I've done the work.</h2><p class="muted" style="font-size:15px">{edu}</p><a class="more" href="about.html">More about me</a></div>
+    <ul class="xp">{xp}</ul>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    <div class="head-row"><div class="head"><p class="label">In their words</p><h2>What working with me is like.</h2></div><a class="more" href="work.html#testimonials">More testimonials</a></div>
+    <div class="quotes">{q}</div>
+  </div>
+</section>
+
+<section class="section white" id="how-i-work">
+  <div class="wrap">
+    <div class="head"><p class="label">How I work</p><h2>Three habits I don't compromise on.</h2></div>
+    <div class="cards three">{pr}</div>
+  </div>
+</section>
+""".format(portrait=img("assets/img/portrait.jpg", "Favour Ogazi", "portrait", eager=True), record=record, names=names, cards=cards,
+           edu=e(EDUCATION), xp=xp_list(), q=quotes(TESTIMONIALS[:3]), pr=pr)
+    page("index.html", "Home", "Favour Ogazi runs operations in fintech, advises founders through FONO, and writes about the human side of ambition.", body, "Home")
 
 def work():
-    idx = "".join('<li><a href="#p-{s}">{t}</a></li>'.format(s=c["slug"], t=e(c["short"])) for c in CASES)
-    projects = "".join("""
-      <article class="project rv" id="p-{slug}" data-c="{tags}">
-        <a href="work-{slug}.html">{ph}</a>
-        <div class="meta"><span class="label">{kind}</span></div>
-        <h2><a href="work-{slug}.html">{title}</a></h2>
-        <p>{summary}</p>
-        <a class="link-arrow" href="work-{slug}.html">Read case study</a>
-      </article>""".format(ph=photo(("https://img.youtube.com/vi/%s/maxresdefault.jpg" % c["video"]) if c["video"] else ("assets/img/work-%s.jpg" % c["slug"]), c["short"], "wide"), slug=c["slug"], tags=c["tags"], kind=e(c["kind"]), org=e(c["org"]), year=e(c["year"]), title=e(c["title"]), summary=e(c["summary"])) for c in CASES)
+    cards = "".join("""<article class="case-card" data-c="{tags}">
+      <a class="img{ph}" href="work-{slug}.html">{im}</a>
+      <p class="label">{kind}</p>
+      <h2 class="h3"><a href="work-{slug}.html">{title}</a></h2>
+      <p>{summary}</p>
+      <a class="more" href="work-{slug}.html">Read the case study</a>
+    </article>""".format(tags=c["tags"], slug=c["slug"], im=case_img(c) or "Photo coming", ph="" if case_img(c) else " placeholder", kind=e(c["kind"]), title=e(c["title"]), summary=e(c["summary"])) for c in CASES)
     body = """
-<section class="page-hero light" id="selected-work">
+<section class="page-hero">
   <div class="wrap">
-    <p class="label muted rv">Portfolio · Case studies</p>
-    <h1 class="rv">Selected <em>work</em></h1>
-    <div class="row"><p class="lead rv">Systems built, teams led, launches delivered. Each case study shows the problem, what I did, the people involved, and what changed.</p>
-    <div class="chips rv" data-filter-group="#projects" role="group" aria-label="Filter work"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="ops">Operations</button><button type="button" aria-pressed="false" data-f="projects">Projects</button></div></div>
+    <p class="label">Selected work</p>
+    <h1>The work, and what changed because of it.</h1>
+    <p class="lead">A few things I've built or helped build, in companies I worked for and through FONO. Each one starts with what was going on, then what I actually did, and what happened next.</p>
+    <div class="chips" data-filter-group="#cases" role="group" aria-label="Filter work"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="ops">Operations</button><button type="button" aria-pressed="false" data-f="projects">Projects</button></div>
   </div>
 </section>
-<section class="light" style="padding-bottom:clamp(40px,6vw,80px)">
-  <div class="wrap split">
-    <div class="split-sticky"><p class="label muted">Index</p><ul class="index-list" data-spy>{idx}</ul></div>
-    <div id="projects">{projects}</div>
+<section style="padding-bottom:clamp(72px,9vw,128px)">
+  <div class="wrap"><div class="work-grid" id="cases">{cards}</div></div>
+</section>
+<section class="section white">
+  <div class="wrap two">
+    <div class="head" style="margin:0"><p class="label">Work history</p><h2>The full path.</h2><a class="more" href="fono-projects.html">See all 18 FONO engagements</a></div>
+    <ul class="xp">{xp}</ul>
   </div>
 </section>
-<section class="section dark" id="testimonials" aria-label="Testimonials">
-  <div class="wrap" style="display:grid;gap:40px">
-    <div style="display:grid;gap:14px"><p class="label muted">Testimonials</p><h2 class="h-xl">In their <em>words.</em></h2></div>
-    <div class="testimonials">{tq}</div>
+<section class="section dark" id="testimonials">
+  <div class="wrap">
+    <div class="head"><p class="label">Testimonials</p><h2>In their words.</h2></div>
+    <div class="quotes">{q}</div>
   </div>
 </section>
-""".format(idx=idx, projects=projects, tq=quote_cards(TESTIMONIALS))
-    page("work.html", "Work", "Selected work and case studies by Favour Ogazi across operations and projects.", body, "Work")
+""".format(cards=cards, xp=xp_list(), q=quotes(TESTIMONIALS))
+    page("work.html", "Work", "Case studies and work history: operations at Mighty and DNI Pay, and projects delivered through FONO.", body, "Work")
 
 def case_pages():
     for i, c in enumerate(CASES):
         nxt = CASES[(i + 1) % len(CASES)]
         built = "".join("<li>%s</li>" % e(b) for b in c["built"])
-        metrics = "".join("<div><b>%s</b><span>%s</span></div>" % (e(v), e(l)) for v, l in c["metrics"])
-        chapters = [("context", "Context", "<p>%s</p>" % e(c["context"])),
-                    ("problem", "The challenge", "<p>%s</p>" % e(c["problem"])),
-                    ("built", "What I did", '<ul class="prose" style="padding-left:20px">%s</ul>' % built),
-                    ("outcome", "Outcome", '<div class="metrics">%s</div><p class="muted" style="font-size:14px">%s</p>' % (metrics, e(c["metrics_note"]))),
-                    ("lessons", "What I learned", "<p>%s</p>" % e(c["lesson"]))]
+        results = "".join("<div><b>%s</b><span>%s</span></div>" % (e(v), e(l)) for v, l in c["metrics"])
+        chapters = [("What was going on", "<p>%s</p>" % e(c["context"])),
+                    ("The challenge", "<p>%s</p>" % e(c["problem"])),
+                    ("What I did", "<ul>%s</ul>" % built),
+                    ("What changed", '<div class="results">%s</div><p class="muted" style="font-size:15px">%s</p>' % (results, e(c["metrics_note"]))),
+                    ("What I took from it", '<p class="h3" style="font-style:italic">%s</p>' % e(c["lesson"]))]
         if c["quote"]:
             q, n, r = c["quote"]
-            chapters.append(("words", "In their words", '<figure class="quote-card light-card"><blockquote><p>“%s”</p></blockquote><figcaption><b>%s</b><cite>%s</cite></figcaption></figure>' % (e(q), e(n), e(r))))
-        cnav = "".join('<li><a href="#%s">%s</a></li>' % (k, t) for k, t, _ in chapters)
-        csec = "".join('<section class="chapter rv" id="%s"><p class="label muted">%02d</p><h2>%s</h2><div class="prose">%s</div></section>' % (k, n, t, b) for n, (k, t, b) in enumerate(chapters, 1))
+            chapters.append(("In their words", '<figure class="quote" style="border:0;padding:0"><blockquote><p>“%s”</p></blockquote><figcaption><cite><b>%s</b>%s</cite></figcaption></figure>' % (e(q), e(n), e(r))))
+        ch = "".join('<section class="chapter"><h2>%s</h2><div class="prose">%s</div></section>' % (t, b) for t, b in chapters)
         if c["video"]:
             media = '<div class="video"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0" title="%s video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>' % (c["video"], e(c["short"]))
+        elif (OUT / "assets" / "img" / ("work-%s.jpg" % c["slug"])).exists():
+            media = img("assets/img/work-%s.jpg" % c["slug"], c["short"], "cover", eager=True)
         else:
-            media = photo("assets/img/work-%s.jpg" % c["slug"], c["short"], "wide")
+            media = ""
         body = """
-<section class="page-hero dark">
+<section class="page-hero">
   <div class="wrap">
-    <a class="label muted rv" href="work.html">← All work</a>
-    <p class="label rv" style="color:#CFCFCB">{kind}</p>
-    <h1 class="rv" style="font-size:clamp(38px,6.2vw,92px)">{title}</h1>
-    <p class="lead rv" style="color:#CFCFCB">{summary}</p>
-    <div class="case-meta rv"><div><span class="label muted">Organisation</span><b>{org}</b></div><div><span class="label muted">Role</span><b>{role}</b></div><div><span class="label muted">Type</span><b>{kind}</b></div><div><span class="label muted">When</span><b>{year}</b></div></div>
+    <a class="back" href="work.html">← All work</a>
+    <p class="label">{kind}</p>
+    <h1 style="max-width:20ch">{title}</h1>
+    <p class="lead">{summary}</p>
+    <div class="facts"><div><span>Organisation</span><b>{org}</b></div><div><span>My role</span><b>{role}</b></div><div><span>Type</span><b>{kind}</b></div><div><span>When</span><b>{year}</b></div></div>
   </div>
 </section>
-<section class="dark" style="padding-bottom:clamp(48px,7vw,96px)"><div class="wrap">{media}</div></section>
-<section class="section light">
-  <div class="wrap chapters">
-    <ul class="chapter-nav" data-spy>{cnav}</ul>
-    <div>{csec}</div>
-  </div>
-</section>
-<section class="white"><div class="wrap next-case"><p class="label muted">Next case study</p><a href="work-{ns}.html">{nt} →</a></div></section>
-""".format(kind=e(c["kind"]), title=e(c["title"]), summary=e(c["summary"]), org=e(c["org"]), role=e(c["role"]), year=e(c["year"]), media=media, cnav=cnav, csec=csec, ns=nxt["slug"], nt=e(nxt["short"]))
+<section><div class="wrap">{media}</div></section>
+<section class="section" style="padding-top:clamp(40px,5vw,64px)"><div class="wrap">{ch}</div></section>
+<section class="section tight white"><div class="wrap next"><p class="label">Next case study</p><a class="h2" href="work-{ns}.html">{nt} →</a></div></section>
+""".format(kind=e(c["kind"]), title=e(c["title"]), summary=e(c["summary"]), org=e(c["org"]), role=e(c["role"]), year=e(c["year"]), media=media, ch=ch, ns=nxt["slug"], nt=e(nxt["short"]))
         page("work-%s.html" % c["slug"], c["short"], c["summary"], body, "Work")
 
 def fono():
-    svc = "".join('<li><div class="row-inner"><span class="k">%02d</span><h3>%s<span class="sub">%s</span></h3><span></span></div></li>' % (n, e(t), e(d)) for n, (t, d) in enumerate(SERVICES, 1))
-    steps = [("Understand", "We learn your business, your goals and what's getting in the way."), ("Design", "We build tailored, data-grounded strategies and systems. No templates."), ("Execute", "We work alongside you to put them in place."), ("Evaluate", "We measure what changed and keep improving.")]
-    st = "".join('<div class="rv"><span class="label muted">%02d</span><h3>%s</h3><p>%s</p></div>' % (n, e(t), e(d)) for n, (t, d) in enumerate(steps, 1))
+    areas = "".join('<li><p class="h3">%s</p><p>%s</p></li>' % (e(t), e(d)) for t, d in FONO_AREAS)
+    modes = "".join('<div><p class="h3">%s</p><p>%s</p></div>' % (e(t), e(d)) for t, d in FONO_MODES)
+    steps = [("Listen", "We learn the business, the people and what's actually in the way."), ("Diagnose", "We name the real problem, which is rarely the first one mentioned."),
+             ("Build", "We design the plan and the systems, and work with your team to put them in place."), ("Review", "We measure what changed, and adjust until it holds.")]
+    st = "".join('<li><h3>%s</h3><p>%s</p></li>' % (e(t), e(d)) for t, d in steps)
     names = " · ".join(e(p["name"]) for p in FONO_PROJECTS[:8])
     body = """
-<section class="page-hero dark">
-  <div class="wrap">
-    <p class="label muted rv">The firm · Since 2023</p>
-    <h1 class="rv" style="font-size:clamp(80px,18vw,280px)">FONO</h1>
-    <div class="row">
-      <div class="prose rv" style="color:#CFCFCB;max-width:52ch">
-        <p class="lead" style="color:var(--paper)">FONO Consulting is an advisory firm focused on helping business owners run their businesses with clarity, structure and purpose.</p>
-        <p>We help founders fix their pricing, build operating systems that don't depend on them for everything, put AI to work in everyday operations, and plan growth they can execute. Practical help, from strategy to the work itself.</p>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn rv" href="contact.html">Work with FONO</a><a class="btn ghost rv" href="fono-projects.html">See FONO projects</a></div>
+<section class="page-hero">
+  <div class="wrap two" style="align-items:end">
+    <div style="display:grid;gap:22px">
+      <p class="label">FONO Consulting · Advisory</p>
+      <h1>FONO</h1>
+      <p class="lead">FONO Consulting is an advisory firm focused on helping business owners run their businesses with clarity, structure and purpose.</p>
+    </div>
+    <div style="display:grid;gap:22px">
+      <p>We work with founders and leadership teams on the parts of a business that decide whether it can grow: how it runs, how it's priced, how it reaches customers, and how the team works together. We give honest advice, and when it helps, we stay to see it through.</p>
+      <div class="btns"><a class="btn" href="contact.html">Start a conversation</a><a class="btn ghost" href="fono-projects.html">See our engagements</a></div>
     </div>
   </div>
 </section>
-<section class="scrolly light" style="height:220vh" aria-label="Why FONO exists">
-  <div class="stage"><div class="wrap">
-    <p class="label muted" style="margin-bottom:28px">Why we exist</p>
-    <p class="reveal-text" data-words>Too many founders are passionate, dedicated but overwhelmed. We take the overwhelm away and reinforce clarity.</p>
-  </div></div>
-</section>
-<section class="section dark" id="projects">
-  <div class="wrap" style="display:grid;gap:28px">
-    <p class="label muted">Selected FONO projects</p>
-    <p class="h-lg" style="max-width:24ch">18 businesses and institutions, from fintech startups to state governments.</p>
-    <p class="muted" style="max-width:70ch">{names} and more.</p>
-    <a class="btn" href="fono-projects.html" style="justify-self:start">See FONO projects</a>
+<section class="section tight white">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:18px">Why we exist</p>
+    <p class="statement" style="max-width:26ch">Too many founders are passionate, dedicated but overwhelmed. We take the overwhelm away and reinforce <em>clarity.</em></p>
   </div>
 </section>
-<section class="section white">
-  <div class="wrap grid-2">
-    <div style="display:grid;gap:18px;align-content:start"><p class="label muted">How we think</p><h2 class="h-lg">Your trusted <span class="serif-i">copilots.</span></h2></div>
-    <div class="prose rv">
-      <p>Every business is different, so we don't do one-size-fits-all. We take the time to understand your vision, your goals and your challenges.</p>
-      <p>Then we build tailored strategies, grounded in data, that take you from idea to execution and evaluation.</p>
+<section class="section dark" id="engagements">
+  <div class="wrap">
+    <div class="head"><p class="label">Selected engagements</p><h2>18 businesses and institutions, from fintech startups to state governments.</h2><p>{names}, and more.</p></div>
+    <a class="btn" href="fono-projects.html">See all engagements</a>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap two">
+    <div class="head" style="margin:0"><p class="label">How we think</p><h2>Advice that holds up on Monday morning.</h2></div>
+    <div class="prose">
+      <p>Every business is different, so we don't arrive with a template. We start by listening: to the founder, the team, the customers and the numbers.</p>
+      <p>Then we tell you what we see, plainly, and build a plan grounded in your data and your reality. We care less about a beautiful strategy deck and more about whether things are working better three months later.</p>
     </div>
   </div>
 </section>
-<section class="section light" id="services">
+<section class="section white" id="areas">
   <div class="wrap">
-    <div class="section-head"><div style="display:grid;gap:14px"><p class="label muted">What we do</p><h2 class="h-xl">Services</h2></div></div>
-    <ul class="rows">{svc}</ul>
+    <div class="head"><p class="label">Where we advise</p><h2>Five areas founders bring to us most.</h2></div>
+    <ul class="rows">{areas}</ul>
+  </div>
+</section>
+<section class="section" id="how-we-engage">
+  <div class="wrap">
+    <div class="head"><p class="label">How we engage</p><h2>Three ways to work with us.</h2></div>
+    <div class="engage">{modes}</div>
   </div>
 </section>
 <section class="section dark">
-  <div class="wrap" style="display:grid;gap:48px">
-    <div style="display:grid;gap:14px"><p class="label muted">How we work</p><h2 class="h-xl">Idea to <em>execution.</em></h2></div>
-    <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">{st}</div>
+  <div class="wrap">
+    <div class="head"><p class="label">How an engagement runs</p><h2>Listen, diagnose, build, review.</h2></div>
+    <ol class="steps">{st}</ol>
   </div>
 </section>
-""".format(svc=svc, st=st, names=names)
-    page("fono.html", "FONO", "FONO Consulting helps founders with pricing, operating systems, AI implementation, growth strategy and leadership.", body, "FONO")
+<section class="section tight white">
+  <div class="wrap"><div class="head-row" style="margin:0;align-items:center"><div class="head" style="margin:0"><h2>Have a business that's outgrowing how it's run?</h2></div><a class="btn" href="contact.html">Talk to FONO</a></div></div>
+</section>
+""".format(names=names, areas=areas, modes=modes, st=st)
+    page("fono.html", "FONO", "FONO Consulting is an advisory firm helping business owners run their businesses with clarity, structure and purpose.", body, "FONO")
 
 def slugify(s):
-    return "".join(ch.lower() if ch.isalnum() else "-" for ch in s).strip("-").replace("--", "-")
+    out = "".join(ch.lower() if ch.isalnum() else "-" for ch in s)
+    while "--" in out: out = out.replace("--", "-")
+    return out.strip("-")
 
 def fono_projects():
-    idx = "".join('<li><a href="#%s">%s</a></li>' % (slugify(p["name"]), e(p["name"])) for p in FONO_PROJECTS)
+    jump = "".join('<a href="#%s">%s</a>' % (slugify(p["name"]), e(p["name"])) for p in FONO_PROJECTS)
     rows = []
     for p in FONO_PROJECTS:
-        dl = '<dt>Context</dt><dd>%s</dd><dt>What we did</dt><dd>%s</dd>' % (e(p["context"]), e(p["did"]))
+        dl = "<dt>The situation</dt><dd>%s</dd><dt>What we did</dt><dd>%s</dd>" % (e(p["context"]), e(p["did"]))
         if p["results"]:
-            dl += '<dt>Results</dt><dd>%s</dd>' % e(p["results"])
-        ins = '<p class="serif-i" style="font-size:clamp(20px,2vw,26px);line-height:1.3;margin-top:8px">“%s”</p>' % e(p["insight"]) if p["insight"] else ""
-        rows.append("""<article class="fono-project rv" id="{id}">
-  <div class="kv"><p class="label muted">{year} · {sector}</p><h2 class="h-md" style="font-size:clamp(24px,2.6vw,36px)">{name}</h2><p class="label" style="margin-top:8px">{service}</p></div>
-  <div style="display:grid;gap:14px"><dl>{dl}</dl>{ins}</div>
-</article>""".format(id=slugify(p["name"]), year=e(p["year"]), sector=e(p["sector"]), name=e(p["name"]), service=e(p["service"]), dl=dl, ins=ins))
+            dl += "<dt>Results</dt><dd>%s</dd>" % e(p["results"])
+        ins = "<blockquote>“%s”</blockquote>" % e(p["insight"]) if p["insight"] else ""
+        rows.append('<article class="engagement" id="{id}"><div class="meta"><p class="label">{y} · {s}</p><h2 class="h3" style="font-size:clamp(26px,2.4vw,34px)">{n}</h2><p class="muted" style="font-size:15px">{sv}</p></div><div style="display:grid;gap:14px"><dl>{dl}</dl>{ins}</div></article>'.format(
+            id=slugify(p["name"]), y=e(p["year"]), s=e(p["sector"]), n=e(p["name"]), sv=e(p["service"]), dl=dl, ins=ins))
     body = """
-<section class="page-hero light">
+<section class="page-hero">
   <div class="wrap">
-    <a class="label muted rv" href="fono.html">← FONO</a>
-    <h1 class="rv">FONO <em>projects</em></h1>
-    <p class="lead rv">The story behind each engagement: the context, what we did, and what changed.</p>
+    <a class="back" href="fono.html">← FONO</a>
+    <p class="label">FONO Consulting · Selected engagements</p>
+    <h1>The engagements, and the story behind each one.</h1>
+    <p class="lead">What was going on, what we did, and what changed. Client names are shared with permission.</p>
+    <nav class="jump" aria-label="Jump to an engagement">{jump}</nav>
   </div>
 </section>
-<section class="light" style="padding-bottom:clamp(80px,11vw,160px)">
-  <div class="wrap split">
-    <div class="split-sticky"><p class="label muted">Projects</p><ul class="index-list small" data-spy>{idx}</ul></div>
-    <div>{rows}</div>
-  </div>
-</section>
-""".format(idx=idx, rows="".join(rows))
-    page("fono-projects.html", "FONO projects", "Selected FONO Consulting projects, with context and results.", body, "FONO")
+<section style="padding-bottom:clamp(72px,9vw,128px)"><div class="wrap">{rows}</div></section>
+""".format(jump=jump, rows="".join(rows))
+    page("fono-projects.html", "FONO engagements", "Selected FONO Consulting engagements, with context and results.", body, "FONO")
 
 def writing():
-    items = "".join('<li data-c="{c}"><a href="{u}" target="_blank" rel="noopener"><span class="k">{tag} · {src}</span><h3>{t}<span class="sub">{s}</span></h3><span class="d">{d}</span></a></li>'.format(c=c, u=u, tag=e(tag), src=e(src), t=e(t), s=e(s), d=e(d)) for t, d, src, c, tag, s, u in ESSAYS)
+    items = "".join('<li data-c="{c}"><a href="{u}" target="_blank" rel="noopener"><span class="k">{tag} · {src}</span><span><span class="h3">{t}</span><span class="sub">{s}</span></span><span class="d">{d}</span></a></li>'.format(
+        c=c, u=u, tag=e(tag), src=e(src), t=e(t), s=e(s), d=e(d)) for t, d, src, c, tag, s, u in ESSAYS)
     tw = "".join('<a class="tweet-shot" href="{u}" target="_blank" rel="noopener"><img src="assets/img/{f}" alt="Post by @Favour_Ogazi: {t}" loading="lazy"></a>'.format(u=u, f=f, t=e(t)) for f, u, t in TWEETS)
     body = """
-<section class="page-hero light">
+<section class="page-hero">
   <div class="wrap">
-    <h1 class="rv">Ideas, <em>over time</em></h1>
-    <p class="lead rv">I'm a deep thinker and an avid reader. My ideas can be unconventional, but they come from hundreds of books and essays I've read and lived with. I write to help people think differently and grow.</p>
+    <p class="label">Writing</p>
+    <h1>Ideas, <em>over time.</em></h1>
+    <p class="lead">I read a lot, and I think slowly. What comes out can be unconventional: ideas about people, work, love and faith that I've turned over for a long time before writing them down. I write them to help people see a little differently, and to see myself better too.</p>
   </div>
 </section>
-<section class="light" style="padding-bottom:clamp(64px,9vw,120px)">
-  <div class="wrap" style="display:grid;gap:32px">
-    <div class="chips" data-filter-group="#essays" role="group" aria-label="Filter writing">
-      <button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="psychology">Psychology</button><button type="button" aria-pressed="false" data-f="relationships">Relationships</button><button type="button" aria-pressed="false" data-f="productivity">Productivity</button><button type="button" aria-pressed="false" data-f="faith">Faith</button><button type="button" aria-pressed="false" data-f="womanhood">Womanhood</button>
-    </div>
-    <ul class="rows" id="essays">{items}</ul>
+<section style="padding-bottom:clamp(64px,8vw,112px)">
+  <div class="wrap" style="display:grid;gap:28px">
+    <div class="chips" data-filter-group="#essays" role="group" aria-label="Filter writing"><button type="button" aria-pressed="true" data-f="all">All</button><button type="button" aria-pressed="false" data-f="psychology">Psychology</button><button type="button" aria-pressed="false" data-f="relationships">Relationships</button><button type="button" aria-pressed="false" data-f="productivity">Productivity</button><button type="button" aria-pressed="false" data-f="faith">Faith</button><button type="button" aria-pressed="false" data-f="womanhood">Womanhood</button></div>
+    <ul class="essays" id="essays">{items}</ul>
   </div>
 </section>
 <section class="section white" id="scribbles">
-  <div class="wrap" style="display:grid;gap:32px">
-    <div class="section-head" style="margin:0"><div style="display:grid;gap:14px"><p class="label muted">Short form</p><h2 class="h-xl">Scribbles of <em>my thoughts.</em></h2></div><p class="muted" style="max-width:34ch">Sometimes I write short ideas to inspire. These are a few that hundreds of thousands of readers loved.</p></div>
+  <div class="wrap" style="display:grid;gap:28px">
+    <div class="head-row" style="margin:0"><div class="head" style="margin:0"><p class="label">Short form</p><h2>Scribbles of <em>my thoughts.</em></h2></div><p class="muted" style="max-width:36ch">Sometimes an idea is only a sentence long. These are a few that hundreds of thousands of people read.</p></div>
     <div class="tweets">{tw}</div>
-    <a class="link-arrow" href="{x}" target="_blank" rel="noopener">More on X</a>
+    <a class="more" href="{x}" target="_blank" rel="noopener">More on X</a>
   </div>
 </section>
 <section class="section dark">
-  <div class="wrap grid-2" style="align-items:end">
-    <div style="display:grid;gap:18px"><p class="label muted">The newsletter</p><h2 class="h-xl">Join 6,000+ <em>readers.</em></h2><p class="lead" style="color:#CFCFCB">New ideas on psychology, relationships, productivity and faith, straight to your inbox.</p></div>
-    <div style="display:grid;gap:16px">
-      <a class="btn" href="{sub}/subscribe" target="_blank" rel="noopener">Subscribe on Substack</a>
-      <div style="display:flex;gap:24px;flex-wrap:wrap"><a class="link-arrow" href="{med}" target="_blank" rel="noopener">Medium</a><a class="link-arrow" href="{sub}" target="_blank" rel="noopener">Substack</a></div>
-    </div>
+  <div class="wrap two" style="align-items:end">
+    <div class="head" style="margin:0"><p class="label">The newsletter</p><h2>Join 6,000+ readers.</h2><p class="lead">New essays on people, work, love and faith, whenever one is ready. No noise in between.</p></div>
+    <div class="btns"><a class="btn" href="{sub}/subscribe" target="_blank" rel="noopener">Subscribe on Substack</a><a class="btn ghost" href="{med}" target="_blank" rel="noopener">Read on Medium</a></div>
   </div>
 </section>
 <section class="section white" id="anthology">
-  <div class="wrap grid-2" style="align-items:center">
-    <div class="big-type"><span class="label" style="color:var(--grey)">FO · Anthology</span><p>Something big is <em>coming.</em></p></div>
-    <div style="display:grid;gap:18px"><p class="label muted">Coming soon</p><h2 class="h-xl">My first <em>anthology.</em></h2><a class="btn" href="{wl}" target="_blank" rel="noopener" style="justify-self:start">Be the first to know</a></div>
+  <div class="wrap two" style="align-items:center">
+    <div class="big-type"><span class="label">Anthology</span><p>Something big is <em>coming.</em></p></div>
+    <div class="head" style="margin:0"><p class="label">Coming soon</p><h2>My first anthology.</h2><p class="lead">A collection of the ideas I keep coming back to. Join the list and you'll hear first.</p><div><a class="btn" href="{wl}" target="_blank" rel="noopener">Be the first to know</a></div></div>
   </div>
 </section>
 """.format(items=items, tw=tw, x=LINKS["X"], sub=LINKS["Substack"], med=LINKS["Medium"], wl=WAITLIST_URL)
-    page("writing.html", "Writing", "Ideas by Favour Ogazi on psychology, relationships, productivity, faith and womanhood.", body, "Writing")
+    page("writing.html", "Writing", "Essays and short ideas by Favour Ogazi on psychology, relationships, productivity, faith and womanhood.", body, "Writing")
 
 def speaking():
-    tl = "".join('<li><div class="row-inner"><span class="k">%02d</span><h3>%s<span class="sub">%s</span></h3><span></span></div></li>' % (n, e(t), e(d)) for n, (t, d) in enumerate(TOPICS, 1))
-    blank = '<figure class="photo square" data-label=""></figure>'
+    tl = "".join('<li><span class="n">%02d</span><p class="h3">%s</p><p>%s</p></li>' % (n, e(t), e(d)) for n, (t, d) in enumerate(TOPICS, 1))
     body = """
-<section class="page-hero dark">
+<section class="page-hero">
   <div class="wrap">
-    <h1 class="rv">In the <em>room</em></h1>
-    <div class="row"><p class="lead rv" style="color:#CFCFCB">Panels, workshops, interviews, podcasts and classes on operations, leadership, careers and storytelling.</p><a class="btn rv" href="contact.html">Invite me to speak</a></div>
+    <p class="label">Speaking & teaching</p>
+    <h1>In the <em>room.</em></h1>
+    <p class="lead">I love a room full of people trying to figure something out. I speak on panels, run workshops, join podcasts and teach, mostly about operations, leadership, careers and finding your voice.</p>
+    <div class="btns"><a class="btn" href="contact.html">Invite me to speak</a></div>
   </div>
 </section>
 <section class="section white" id="teaching">
-  <div class="wrap grid-2" style="align-items:center">
-    <div style="display:grid;gap:18px"><p class="label muted">Teaching</p><h2 class="h-lg">Content creation &amp; digital marketing</h2><p class="lead">I teach remote cohorts at a London and Lagos tech academy: a two-month content creation course and a three-month digital marketing course.</p></div>
+  <div class="wrap two" style="align-items:center">
+    <div class="head" style="margin:0"><p class="label">Teaching</p><h2>Content creation & digital marketing.</h2><p class="lead">On weekends I teach remote cohorts at a London and Lagos tech academy: a two-month content creation course and a three-month digital marketing course. Watching someone find their voice for the first time never gets old.</p></div>
     {teach}
   </div>
 </section>
 <section class="section dark" id="on-stage">
-  <div class="wrap" style="display:grid;gap:36px">
-    <div style="display:grid;gap:14px"><p class="label muted">Moments</p><h2 class="h-xl">On <em>stage.</em></h2></div>
-    <div class="grid-2" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">{b}{b}{b}</div>
-  </div>
-</section>
-<section class="section light" id="topics">
   <div class="wrap">
-    <div class="section-head"><div style="display:grid;gap:14px"><p class="label muted">Book me for</p><h2 class="h-xl">Topics</h2></div><a class="link-arrow" href="contact.html">Invite me to speak</a></div>
-    <ul class="rows">{tl}</ul>
+    <div class="head"><p class="label">Moments</p><h2>On stage.</h2></div>
+    <div class="work-grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px"><div class="photo-blank"></div><div class="photo-blank"></div><div class="photo-blank"></div></div>
   </div>
 </section>
-""".format(teach=photo("assets/img/teaching.jpg", "Favour Ogazi teaching", "wide"), b=blank, tl=tl)
-    page("speaking.html", "Speaking", "Favour Ogazi speaks and teaches on business operations, leadership, fintech, AI, careers and storytelling.", body, "Speaking")
+<section class="section" id="topics">
+  <div class="wrap">
+    <div class="head-row"><div class="head" style="margin:0"><p class="label">Book me for</p><h2>Topics I speak on.</h2></div><a class="more" href="contact.html">Invite me to speak</a></div>
+    <ul class="topics">{tl}</ul>
+  </div>
+</section>
+""".format(teach=img("assets/img/teaching.jpg", "Favour Ogazi teaching", "cover"), tl=tl)
+    page("speaking.html", "Speaking", "Favour Ogazi speaks and teaches on operations, leadership, fintech, AI, careers and storytelling.", body, "Speaking")
 
 def about():
-    pr = "".join('<div class="rv"><span class="label muted">%02d</span><h3>%s</h3><p>%s</p></div>' % (n, e(t), e(d)) for n, (t, d) in enumerate(PRINCIPLES, 1))
-    exp = "".join('<li><div class="row-inner"><span class="k">%s</span><h3>%s<span class="sub">%s</span></h3><span></span></div></li>' % (e(w), e(r), e(o)) for w, r, o in EXPERIENCE)
-    now = "".join('<li><div class="row-inner"><span class="k">%s</span><h3>%s</h3><span></span></div></li>' % (e(k), e(v)) for k, v in NOW)
+    pr = "".join('<div><p class="h3">%s</p><p>%s</p></div>' % (e(t), e(d)) for t, d in PRINCIPLES)
+    now = "".join('<li><p class="h3">%s</p><p>%s</p></li>' % (e(k), e(v)) for k, v in NOW)
     body = """
-<section class="page-hero light">
-  <div class="wrap">
-    <p class="label muted rv">About</p>
-    <h1 class="rv">One <em>builder</em></h1>
-  </div>
+<section class="page-hero">
+  <div class="wrap"><p class="label">About</p><h1>Hello, I'm <em>Favour.</em></h1></div>
 </section>
-<section class="light" style="padding-bottom:clamp(80px,11vw,160px)">
-  <div class="wrap grid-2">
+<section style="padding-bottom:clamp(72px,9vw,128px)">
+  <div class="wrap two">
     {ph}
-    <div class="prose rv" style="align-content:start">
-      <p style="font-size:clamp(20px,2vw,26px);line-height:1.45;font-weight:500;letter-spacing:-.01em">I'm Favour, an operations leader who turns strategy into systems that work. I bring clarity to complex problems and help teams execute with ownership.</p>
-      <p>Today I lead operations at Mighty, a B2B fintech in cross-border payments and treasury. Before that, I helped build DNI Pay from a young startup into a live payments platform. Through FONO, my advisory firm, I've worked with 18 businesses and institutions on pricing, operations, growth and AI.</p>
-      <p>I'm also a writer and an avid reader. Writing is how I process what I see, think and feel, and thousands of readers follow my ideas on Substack, Medium and X. I believe documentation and clear communication are leadership skills, and I practise both.</p>
-      <p>Outside work, I'm a woman of faith who cares deeply about her people. I serve in Children's Church, treasure my friendships, and love good stories, travel, movies and finding humour in ordinary things. I want a full life, with room for ambition, love, curiosity and quiet.</p>
-      <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:8px"><a class="link-arrow" href="{li}" target="_blank" rel="noopener">LinkedIn</a><a class="link-arrow" href="contact.html">Work with me</a></div>
+    <div class="prose">
+      <p class="h3" style="font-size:clamp(24px,2.2vw,30px)">I never planned to work in operations. A mix of chance, curiosity and drive took me there.</p>
+      <p>I studied microbiology. I sold beauty products in school, helped run a student union election campaign, started FONO, and went back for a master's in Business and Management. Somewhere along the way I realised the thing I'm best at is the part most people find boring: turning a good idea into a way of working that holds up.</p>
+      <p>Most businesses don't stall for lack of ideas. They stall because nobody has built the structure, the routines and the trust that let an idea run without the founder holding it together. That's my part. Today I do it at Mighty, a cross-border payments company, and for the founders FONO works with. Before that, I helped build DNI Pay from a young startup into a live payments platform.</p>
+      <p>I'm also a writer and a big reader. Writing is how I process what I see, think and feel, and thousands of people read my ideas on Substack, Medium and X.</p>
+      <p>Outside work, I'm a woman of faith and I serve in Children's Church. I treasure my friends, love a good story, travel when I can, watch too many movies, and find the funny side of ordinary days. I want a full life, with room for ambition, love, curiosity and quiet.</p>
+      <div class="btns" style="margin-top:6px"><a class="btn" href="contact.html">Work with me</a><a class="btn ghost" href="{li}" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
-  </div>
-</section>
-<section class="section dark">
-  <div class="wrap" style="display:grid;gap:48px">
-    <div style="display:grid;gap:14px"><p class="label muted">How I work</p><h2 class="h-xl">Three <em>principles.</em></h2></div>
-    <div class="grid-3">{pr}</div>
   </div>
 </section>
 <section class="section white" id="experience">
-  <div class="wrap grid-2">
-    <div style="display:grid;gap:18px;align-content:start"><p class="label muted">Path</p><h2 class="h-xl">Experience</h2><p class="muted">MSc Business and Management, Aston University · Operations Management, University of Pennsylvania · McKinsey Forward Program</p></div>
-    <ul class="rows path">{exp}</ul>
+  <div class="wrap two">
+    <div class="head" style="margin:0"><p class="label">Experience</p><h2>The path so far.</h2><p class="muted" style="font-size:15px">{edu}</p></div>
+    <ul class="xp">{xp}</ul>
   </div>
 </section>
-<section class="section light" id="now">
-  <div class="wrap grid-2">
-    <div style="display:grid;gap:18px;align-content:start"><p class="label muted">Updated every few months</p><h2 class="h-xl">Now</h2></div>
-    <ul class="rows">{now}</ul>
+<section class="section">
+  <div class="wrap">
+    <div class="head"><p class="label">How I work</p><h2>Three habits.</h2></div>
+    <div class="cards three">{pr}</div>
   </div>
 </section>
-""".format(ph=photo("assets/img/about.jpg", "Favour Ogazi"), li=LINKS["LinkedIn"], pr=pr, exp=exp, now=now)
-    page("about.html", "About", "About Favour Ogazi: operations leader, founder of FONO, writer and thinker.", body, "About")
+<section class="section dark" id="now">
+  <div class="wrap two">
+    <div class="head" style="margin:0"><p class="label">Now</p><h2>What I'm focused on.</h2><p class="muted" style="font-size:15px">Updated every few months.</p></div>
+    <ul class="xp">{now}</ul>
+  </div>
+</section>
+""".format(ph=img("assets/img/about.jpg", "Favour Ogazi", "portrait"), li=LINKS["LinkedIn"], edu=e(EDUCATION), xp=xp_list(), pr=pr,
+           now=now.replace("<li>", '<li style="grid-template-columns:150px minmax(0,1fr)">'))
+    page("about.html", "About", "About Favour Ogazi: operations leader, founder of FONO, writer, and a woman of faith who loves a good story.", body, "About")
 
 def contact():
-    ways = [("Leadership roles", "Operations Lead, Head of Operations, Strategy & Operations or Chief of Staff, especially at international fintech and technology companies."),
-            ("Advisory & consulting", "Operating systems, process improvement, growth strategy or AI implementation, through FONO."),
-            ("Speaking & teaching", "Panels, workshops, podcasts and classes."),
-            ("Writing & bylines", "Essays and commentary on business, leadership and life."),
-            ("Collaborations", "Partnerships and projects with peers and organisations."),
-            ("Investment", "Later. Happy to start the conversation.")]
-    w = "".join('<div class="rv"><h3>%s</h3><p>%s</p></div>' % (e(t), e(d)) for t, d in ways)
-    soc = "".join('<a class="link-arrow" href="%s" target="_blank" rel="noopener">%s</a>' % (u, n) for n, u in LINKS.items())
+    ways = [("A leadership role", "Operations Lead, Head of Operations, Strategy & Operations or Chief of Staff, especially at international fintech and technology companies."),
+            ("Advice for your business", "Operations, pricing, growth or AI, through FONO."),
+            ("A talk or a class", "Panels, workshops, podcasts and teaching."),
+            ("Writing", "Essays and commentary on business, leadership and life."),
+            ("Working together", "Partnerships and projects with people and organisations I admire."),
+            ("Investment", "Not yet, but I'm happy to start the conversation.")]
+    w = "".join('<div><p class="h3">%s</p><p>%s</p></div>' % (e(t), e(d)) for t, d in ways)
+    soc = "".join('<a class="more" href="%s" target="_blank" rel="noopener">%s</a>' % (u, n) for n, u in LINKS.items())
     body = """
-<section class="page-hero dark">
-  <div class="wrap">
-    <p class="label muted rv">Work with me</p>
-    <h1 class="rv">If we're <em>aligned</em></h1>
-    <p class="lead rv" style="color:#CFCFCB">This is what I do, what I've done, and how I think. If it fits what you need, here's how to reach me.</p>
-  </div>
+<section class="page-hero">
+  <div class="wrap"><p class="label">Work with me</p><h1>If something here sounds like what you need, I'd love to hear about it.</h1></div>
 </section>
-<section class="section light">
-  <div class="wrap" style="display:grid;gap:40px">
-    <p class="label muted">Ways to work together</p>
-    <div class="grid-3">{w}</div>
-  </div>
+<section style="padding-bottom:clamp(64px,8vw,112px)">
+  <div class="wrap"><div class="cards three">{w}</div></div>
 </section>
 <section class="section white" id="message">
-  <div class="wrap grid-2">
-    <div style="display:grid;gap:22px;align-content:start">
-      <p class="label muted">Email</p>
-      <p class="h-md" style="word-break:break-word">{em}</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="mailto:{em}">Send an email</a><button class="btn ghost" type="button" data-copy="{em}">Copy address</button></div>
-      <p class="label muted" style="margin-top:20px">Elsewhere</p>
-      <div style="display:flex;gap:22px;flex-wrap:wrap">{soc}</div>
-      <p class="label muted" style="margin-top:20px">Newsletter</p>
-      <a class="link-arrow" href="{wl}" target="_blank" rel="noopener">Be the first to know</a>
+  <div class="wrap two">
+    <div style="display:grid;gap:18px;align-content:start">
+      <p class="label">Email</p>
+      <p class="h3" style="word-break:break-word">{em}</p>
+      <div class="btns"><a class="btn" href="mailto:{em}">Send an email</a><button class="btn ghost" type="button" data-copy="{em}">Copy address</button></div>
+      <p class="label" style="margin-top:18px">Elsewhere</p>
+      <div style="display:flex;gap:18px;flex-wrap:wrap">{soc}</div>
     </div>
     <form class="form" id="contact-form">
-      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" required autocomplete="name"></div>
-      <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" required autocomplete="email"></div>
-      <div class="field"><label for="f-org">Organisation</label><input id="f-org" name="org" autocomplete="organization"></div>
-      <div class="field"><label for="f-topic">What's this about?</label><select id="f-topic" name="topic"><option>Leadership role</option><option>Advisory / FONO</option><option>Speaking or teaching</option><option>Writing</option><option>Collaboration</option><option>Something else</option></select></div>
-      <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
-      <button class="btn" type="submit" style="justify-self:start">Send message</button>
+      <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" required autocomplete="name"></div>
+      <div class="field"><label for="f-email">Your email</label><input id="f-email" name="email" type="email" required autocomplete="email"></div>
+      <div class="field"><label for="f-org">Organisation (optional)</label><input id="f-org" name="org" autocomplete="organization"></div>
+      <div class="field"><label for="f-topic">What's this about?</label><select id="f-topic" name="topic"><option>A leadership role</option><option>Advice through FONO</option><option>A talk or a class</option><option>Writing</option><option>Working together</option><option>Something else</option></select></div>
+      <div class="field"><label for="f-msg">Tell me a little</label><textarea id="f-msg" name="message" required></textarea></div>
+      <div><button class="btn" type="submit">Send message</button></div>
       <p class="form-note" id="form-note" aria-live="polite"></p>
     </form>
   </div>
 </section>
-""".format(w=w, em=EMAIL, soc=soc, wl=WAITLIST_URL)
-    page("contact.html", "Work with me", "Work with Favour Ogazi: leadership roles, advisory through FONO, speaking, teaching, writing and collaborations.", body, "Contact")
+""".format(w=w, em=EMAIL, soc=soc)
+    page("contact.html", "Work with me", "Get in touch with Favour Ogazi about leadership roles, advice through FONO, speaking, writing or working together.", body, "Contact")
 
 def notfound():
     body = """
-<section class="hero dark" style="min-height:80vh"><div class="wrap" style="grid-template-columns:1fr"><div style="display:grid;gap:24px">
-<p class="label muted">404</p><h1>Not<span>found</span></h1><p class="lead" style="color:#CFCFCB">This page doesn't exist yet.</p><a class="link-arrow" href="index.html">Back home</a></div></div></section>"""
+<section class="page-hero" style="min-height:60vh"><div class="wrap"><p class="label">404</p><h1>This page doesn't exist <em>yet.</em></h1><div><a class="btn" href="index.html">Back home</a></div></div></section>"""
     page("404.html", "Page not found", "Page not found.", body, "")
 
 def favicon():
     (OUT / "assets" / "favicon.svg").write_text(
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" fill="#0A0A0A"/>'
-        '<g fill="#FAFAF8" transform="translate(2 0) scale(.9) translate(2 2)"><rect x="3" y="8" width="4.2" height="24"/><rect x="3" y="8" width="14" height="4.2"/><rect x="3" y="18.2" width="10.5" height="3.8"/>'
-        '<circle cx="28.5" cy="20" r="8.6" fill="none" stroke="#FAFAF8" stroke-width="4"/></g></svg>', encoding="utf-8")
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" rx="8" fill="#141413"/>'
+        '<text x="20" y="28" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#FAF9F6">F</text></svg>', encoding="utf-8")
 
 if __name__ == "__main__":
-    # Never delete public/ as a whole: photos in public/assets/img must survive rebuilds.
     (OUT / "assets" / "img").mkdir(parents=True, exist_ok=True)
     for f in ("site.css", "site.js"):
         shutil.copy(SRC / "assets" / f, OUT / "assets" / f)
-    (OUT / "assets" / "img" / "README.txt").write_text(
-        "Drop photos here with these names and they appear automatically:\n"
-        "portrait.jpg (homepage), about.jpg, teaching.jpg,\n"
-        "work-<slug>.jpg (cover) for each case study. Slugs: " + ", ".join(c["slug"] for c in CASES) + "\n", encoding="utf-8")
     favicon()
     home(); work(); case_pages(); fono(); fono_projects(); writing(); speaking(); about(); contact(); notfound()
     print("Built", sorted(p.name for p in OUT.glob("*.html")))
