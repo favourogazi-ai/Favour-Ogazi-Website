@@ -1,3 +1,5 @@
-Drop photos here with these names and they appear automatically:
-portrait.jpg (homepage), about.jpg, teaching.jpg,
-work-<slug>.jpg (cover) for each case study. Slugs: mighty-treasury, dni, gamp, lagos-liga-2024, techunwind-fest, national-msme-conference-2024
+Photos used on the site:
+portrait.jpg  homepage, top
+about.jpg     homepage, "A little more about me"
+x-1.png to x-5.png  posts from X on the Writing page
+Replace a file with one of the same name to change the photo.
