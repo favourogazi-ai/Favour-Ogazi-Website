@@ -25,7 +25,7 @@ PARTS = [
      "https://www.linkedin.com/in/favour-ogazi", "Find me on LinkedIn", True),
     ("FONO", "FONO Consulting is an advisory firm focused on helping business owners run their businesses with clarity, structure and purpose. I started it for founders whose business has outgrown the way it's being run.",
      "index.html#contact", "Talk to FONO", False),
-    ("Writing", "I read a lot and think slowly. Writing is how I work out what I believe about people, work, love and faith, and I share it with readers on Substack, Medium and X.",
+    ("Writing", "I read a lot, and writing is how I work out what I believe about people, work, love and faith. I share those ideas with readers on Substack, Medium and X.",
      "writing.html", "Read my writing", False),
 ]
 
@@ -71,7 +71,7 @@ def head(title, desc):
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Montserrat:ital,wght@0,400;1,400&display=swap">
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -128,9 +128,8 @@ def home():
 <section class="hero">
   <div class="wrap">
     <div class="hero-text">
-      <p class="kicker">Operations · FONO · Writing</p>
-      <h1>Hi, I'm Favour.</h1>
-      <p class="lead">Most of my week goes to my 9-to-5 in operations. I also run FONO, a small advisory firm, and in the time that's left, I write.</p>
+      <h1 class="curly">Hi, I'm Favour!</h1>
+      <p class="lead">Now that you're here, be ready to experience me.</p>
       <div class="btns"><a class="btn" href="writing.html">Read my writing</a><a class="btn ghost" href="#contact">Say hello</a></div>
     </div>
     <img class="portrait" src="assets/img/portrait.jpg" alt="Favour Ogazi">
@@ -154,7 +153,7 @@ def home():
   <div class="wrap">
     <div class="head-row"><div class="head"><p class="kicker">Recent writing</p><h2>Things I've been thinking about.</h2></div><a class="link" href="writing.html">All my writing</a></div>
     <ul class="essays">{essays}</ul>
-    <div class="btns" style="margin-top:36px"><a class="btn" href="{nl}" target="_blank" rel="noopener">Get new essays by email</a></div>
+    <div class="btns" style="margin-top:36px"><a class="btn" href="{nl}" target="_blank" rel="noopener">Read new ideas from me by email</a></div>
   </div>
 </section>
 
@@ -163,9 +162,9 @@ def home():
     <img class="photo" src="assets/img/about.jpg" alt="Favour Ogazi" loading="lazy">
     <div class="prose">
       <p class="kicker">A little more about me</p>
-      <h2>I never planned to work in operations.</h2>
-      <p>I studied microbiology, then went back for a master's in Business and Management. A mix of chance and curiosity took me into operations, and I found I liked the part most people find boring: getting things to run properly.</p>
-      <p>Outside work, I'm a woman of faith and I serve in Children's Church. I treasure my friends, love a good story, travel when I can, and watch more movies than I should. I'm based in Abuja.</p>
+      <h2>Operations is my <em>forte.</em></h2>
+      <p>With a master's degree in Business and Management, working in operations has become what I do excellently. Give me a business, a team or a plan, and I'll make sure it runs the way it should, every single day.</p>
+      <p>Outside work, I'm a woman of faith and I serve in Children's Church. I treasure my friends, love a good story, and watch more movies than I should. Sometimes I'm somewhere making impact in Africa; other times, you could run into me around the world. Safe to say, I'm a moving woman who always finds her luck.</p>
     </div>
   </div>
 </section>
@@ -201,8 +200,8 @@ def writing():
   <div class="wrap two">
     <div class="prose">
       <p class="kicker">The newsletter</p>
-      <h2>New essays, straight to your inbox.</h2>
-      <p>Whenever a new essay is ready, I send it out. Nothing in between.</p>
+      <h2>New ideas, straight to your inbox.</h2>
+      <p>Whenever I have a new idea worth sharing, it lands in your inbox. Nothing in between.</p>
       <div class="btns"><a class="btn" href="{nl}" target="_blank" rel="noopener">Subscribe on Substack</a><a class="btn ghost" href="https://medium.com/@thefavourogazi" target="_blank" rel="noopener">Read on Medium</a></div>
     </div>
     <div class="prose">
@@ -214,7 +213,7 @@ def writing():
   </div>
 </section>
 {contact}""".format(chips=chips, items=essay_items(ESSAYS), tw=tw, nl=NEWSLETTER, wl=WAITLIST_URL, contact=contact_block())
-    page("writing.html", "Writing", "Essays and short thoughts by Favour Ogazi on people, work, love and faith.", body, "Writing")
+    page("writing.html", "Writing", "Ideas and short thoughts by Favour Ogazi on people, work, love and faith.", body, "Writing")
 
 def notfound():
     body = """

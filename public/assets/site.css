@@ -23,7 +23,10 @@ h1, h2, h3, b, strong, button, input, select, textarea { font-weight: 400; }
 ul, ol { list-style: none; }
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; height: auto; }
-em { font-style: italic; color: var(--accent); }
+em, .curly { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+em { color: var(--accent); font-size: 1.12em; line-height: 1; }
+h1.curly { font-size: clamp(52px, 7vw, 92px); line-height: 1.02; color: var(--ink); }
+@media (min-width: 901px) { h1.curly { white-space: nowrap; } }
 .dark em { color: var(--accent-on-dark); }
 [hidden] { display: none !important; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
